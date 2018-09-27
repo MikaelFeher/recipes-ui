@@ -1,8 +1,9 @@
 <template>
   <div id="app">
      <nav class="white">
-        <div class="nav-wrapper">
+        <div class="nav-wrapper row">
           <router-link to="/" class="brand-logo center black-text">RECEPT &amp; NÄRING</router-link>
+          
         </div>
       </nav>
     <router-view/>
