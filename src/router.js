@@ -3,7 +3,6 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Home1 from './views/Home.1.vue';
 
-
 Vue.use(Router);
 
 export default new Router({
@@ -20,6 +19,5 @@ export default new Router({
       name: 'home',
       component: Home, 
     }
-    
   ],
 });
