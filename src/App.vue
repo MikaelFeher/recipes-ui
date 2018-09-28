@@ -3,15 +3,7 @@
     <div id="wrapper"></div>
      <nav class="orange">
         <div class="nav-wrapper row">
-          <ul class=" left">
-            <li>
-              <router-link to="/">With Hero</router-link>
-            </li>
-            <li>
-              <router-link to="/home1">Without Hero</router-link>
-            </li>
-          </ul>
-          <router-link to="/" class="brand-logo center white-text">RECEPT &amp; NÄRING</router-link>
+          <router-link to="/" class="brand-logo center white-text col s12">RECEPT &amp; NÄRING</router-link>
           <div v-if="isHomeOne()" class="input-field right col m3" >
             <input type="text" id="search" class="white">
             <label for="search" class="center">Sök recept</label>
@@ -40,13 +32,15 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Ubuntu');
+
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -61,6 +55,10 @@ body {
 nav {
   top: 0;
   z-index: 100;
+}
+
+.brand-logo {
+  text-shadow: 1px 1px#2c3e50;
 }
 
 </style>
