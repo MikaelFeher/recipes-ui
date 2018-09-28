@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Home1 from './views/Home.1.vue';
+import RecipeDetails from './views/RecipeDetails.vue';
+
 
 Vue.use(Router);
 
@@ -18,6 +20,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home, 
+    },
+    {
+      path: '/recipe/:id',
+      name: 'recipe',
+      component: RecipeDetails
     }
   ],
 });

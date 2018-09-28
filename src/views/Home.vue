@@ -7,7 +7,6 @@
 
 <script>
 // @ is an alias to /src
-import { mapActions } from 'vuex'
 
 import Hero from '@/components/Hero'
 import RecipesDisplay from '@/components/RecipesDisplay.vue'
@@ -17,16 +16,7 @@ export default {
   components: {
     Hero,
     RecipesDisplay
-  },
-  created: function() {
-    this.getAllRecipes()
-  },
-  methods: {
-    ...mapActions(['getRecipes']),
-    getAllRecipes() {
-      this.getRecipes()
-    }
-  },
+  }
 };
 </script>
 

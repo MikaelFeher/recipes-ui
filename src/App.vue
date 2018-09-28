@@ -23,8 +23,17 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
+  created: function() {
+    this.getAllRecipes()
+  },
   methods: {
+    ...mapActions(['getRecipes']),
+    getAllRecipes() {
+      this.getRecipes()
+    },
     isHomeOne() {
       return window.location.pathname === '/home1';
     }
