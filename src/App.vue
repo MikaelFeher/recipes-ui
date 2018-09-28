@@ -24,16 +24,14 @@
 
 <script>
 import { mapActions } from 'vuex'
+import Home from '@/views/Home.vue'
 
 export default {
-  created: function() {
-    this.getAllRecipes()
+  created() {
+    this.fetchRecipesFromAPI()
   },
   methods: {
-    ...mapActions(['getRecipes']),
-    getAllRecipes() {
-      this.getRecipes()
-    },
+    ...mapActions(['fetchRecipesFromAPI']),
     isHomeOne() {
       return window.location.pathname === '/home1';
     }

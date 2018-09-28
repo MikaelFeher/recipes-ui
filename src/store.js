@@ -7,24 +7,30 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     recipes:[],
-    searchResult: []
+    recipesFilterByName: []
+  },
+  getters: {
+    getRecipeById: state => id => {
+      return state.recipes.find(recipe => recipe._id === id)
+    }
+    
   },
   mutations: {
-    GET_RECIPES(state, recipes) {
+    POPULATE_RECIPES(state, recipes) {
       state.recipes = recipes.data
     },
-    FIND_RECIPE(state, searchResult) {
-      state.searchResult = searchResult
+    FILTER_RECIPES(state, filteredResult) {
+      state.recipesFilterByName = filteredResult
     }
   },
   actions: {
-    async getRecipes({ commit }) {
+    async fetchRecipesFromAPI({ commit }) {
       const recipes = await axios.get('http://localhost:3003/recipes/')
-      commit('GET_RECIPES', recipes)
+      commit('POPULATE_RECIPES', recipes)
     },
-    findRecipe({ commit, state }, recipeToFind) {
-      const result = state.recipes.filter(recipe => recipe.name.toLowerCase().indexOf(recipeToFind.toLowerCase()) === 0)
-      commit('FIND_RECIPE', result)
+    filterRecipesByName({ commit, state }, recipeToFind) {
+      const filtered = state.recipes.filter(recipe => recipe.name.toLowerCase().indexOf(recipeToFind.toLowerCase()) === 0)
+      commit('FILTER_RECIPES', filtered)
     }
   },
 });

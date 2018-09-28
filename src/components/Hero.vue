@@ -20,9 +20,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['findRecipe']),
+    ...mapActions(['filterRecipesByName']),
     findARecipe() {
-      this.findRecipe(this.recipeToFind)
+      this.filterRecipesByName(this.recipeToFind)
     }
   },
 
