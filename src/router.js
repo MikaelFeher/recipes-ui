@@ -1,11 +1,14 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import Home from './views/Home.vue';
-import Home1 from './views/Home.1.vue';
-import RecipeDetails from './views/RecipeDetails.vue';
+import Vue from 'vue'
+import Router from 'vue-router'
+import Home from '@/views/Home.vue'
+import Home1 from '@/views/Home.1.vue'
+import RecipeDetails from '@/views/RecipeDetails.vue'
+import Admin from '@/views/admin/Admin.vue'
+import AddRecipe from '@/components/admin/AddRecipe.vue'
 
 
-Vue.use(Router);
+
+Vue.use(Router)
 
 export default new Router({
   mode: 'history',
@@ -25,6 +28,16 @@ export default new Router({
       path: '/recipe/:id',
       name: 'recipe',
       component: RecipeDetails
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: Admin
+    },
+    {
+      path: '/admin/add-new-recipe',
+      name: 'add-new-recipe',
+      component: AddRecipe
     },
     {
       path: '*',

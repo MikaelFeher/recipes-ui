@@ -31,6 +31,11 @@ export default new Vuex.Store({
     filterRecipesByName({ commit, state }, recipeToFind) {
       const filtered = state.recipes.filter(recipe => recipe.name.toLowerCase().indexOf(recipeToFind.toLowerCase()) === 0)
       commit('FILTER_RECIPES', filtered)
+    },
+    async addNewRecipe({ dispatch }, newRecipe) {
+      await axios.post('http://localhost:3003/recipes/admin/recipe/add-new-recipe', newRecipe)
+        .catch(err => console.log(err))
+      dispatch('fetchRecipesFromAPI')
     }
   },
 });

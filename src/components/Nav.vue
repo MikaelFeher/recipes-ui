@@ -2,6 +2,7 @@
   <div class="navbar-fixed">
     <nav class="orange">
       <div class="nav-wrapper row">
+        <router-link to="/admin" class="left">Admin Sidor</router-link>
         <router-link to="/" class="brand-logo center white-text col s12">RECEPT &amp; NÄRING</router-link>
       </div>
       <Hero v-if="false" />

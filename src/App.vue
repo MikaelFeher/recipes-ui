@@ -9,7 +9,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import Home from '@/views/Home.vue'
+// import Home from '@/views/Home.vue'
 import Nav from '@/components/Nav'
 
 
@@ -29,6 +29,7 @@ export default {
   },
   created() {
     this.fetchRecipesFromAPI()
+    M.AutoInit();
   },
   methods: {
     ...mapActions(['fetchRecipesFromAPI'])
