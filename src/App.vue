@@ -12,6 +12,7 @@ import { mapActions } from 'vuex'
 import Home from '@/views/Home.vue'
 import Nav from '@/components/Nav'
 
+// TODO: Implement a proper landing page and turn the current Home page into a recipesdisplay...
 
 export default {
   components: {
