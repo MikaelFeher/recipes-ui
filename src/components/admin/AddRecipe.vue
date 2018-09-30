@@ -41,30 +41,31 @@
       </div>
       <!-- Ingredients -->
       <h4>Ingredienser</h4>
-      <table>
-        <thead>
-          <th>Ingrediens</th>
-          <th>Mängd</th>
-          <th>Gram/enhet</th>
-        </thead>
-        <tbody v-for="(ingredient, index) in newRecipe.ingredients" :key="index">
-          <td>{{ ingredient.name }}</td>
-          <td>{{ ingredient.units }} {{ ingredient.measuringUnit }}</td>
-          <td>{{ ingredient.unitEquivalentInGrams }} gram</td>
-        </tbody>
-      </table>
+      <div class="row">
+        <table class="col m12 s10 offset-s1 push-m1">
+          <thead>
+            <th>Ingrediens</th>
+            <th>Mängd</th>
+            <th>Gram/enhet</th>
+          </thead>
+          <tbody v-for="(ingredient, index) in newRecipe.ingredients" :key="index">
+            <td>{{ ingredient.name }}</td>
+            <td>{{ ingredient.units }} {{ ingredient.measuringUnit }}</td>
+            <td>{{ ingredient.unitEquivalentInGrams }} gram</td>
+          </tbody>
+        </table>
+      </div>
       <form @submit.prevent="addIngredient">
         <div class="input-field">
           <label for="ingredient-name">Ingrediens</label>
-          <input type="text" id="ingredient-name" v-model="tempIngredientName" @input="findIngredient">
+          <input type="text" id="ingredient-name" v-model="ingredient.name" @input="findIngredient">
         </div>
-        <ul >
-          <li v-for="(ingredient, index) in ingredientsFilteredByName" :key="index" @click="addIngredientDetails(ingredient)">
+        <ul v-if="showList" id="ingredients-select-list">
+          <li v-for="(ingredient, index) in ingredientsFilteredByName" :key="index" @click="addIngredientDetails(ingredient)" class="left-align">
             {{ ingredient.Namn }}
+            <hr/>
           </li>
         </ul>
-        
-
         <div class="input-field">
           <label for="ingredient-units">Mängd</label>
           <input type="number" id="ingredient-units" v-model="ingredient.units">
@@ -132,20 +133,8 @@
           nutritionalValues: []
         },
         instruction: '',
-        tempIngredientName: ''
-        // name: '',
-        // numberOfPeople: '',
-        // ingredientName: '',
-        // ingredientUnits: '',
-        // ingredientMeasuringUnit: '',
-        // ingredientunitEquivalentInGrams: '',
-        // ingredientsList: [],
-        // instructionsList: [],
-        // img: '',
-        // description: '',
-        // category: [],
-        // cookingTime: '',
-        // difficultyLevel: ''
+        tempIngredientName: '',
+        showList: false
       }
     },
     computed: {
@@ -154,13 +143,15 @@
     methods: {
       ...mapActions(['addNewRecipe', 'filterIngredientsByName', 'clearOutFilteredIngredients']),
       findIngredient() {
-        this.filterIngredientsByName(this.tempIngredientName)
+        if(this.ingredient.name.length < 1) return
+        this.showList = true
+        this.filterIngredientsByName(this.ingredient.name)
       },
       addIngredientDetails(ingredient) {
         this.ingredient.name = ingredient.Namn
         this.ingredient.nutritionalValues = ingredient.Naringsvarden.Naringsvarde
-        console.log('this.ingredient: ', this.ingredient)
         this.clearOutFilteredIngredients()
+        this.showList = false
       },
       addIngredient() {
         this.newRecipe.ingredients = this.newRecipe.ingredients.concat(this.ingredient)
@@ -209,10 +200,6 @@
 </script>
 
 <style>
-  /* @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.2";
-  @import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
-  @import "https://fonts.googleapis.com/icon?family=Material+Icons"; */
-
   button, input[type="button"] {
     margin-bottom: 8%;
   }
@@ -225,5 +212,15 @@
 
   #category-selection span {
     text-transform: capitalize;
+  }
+
+  #ingredients-select-list {
+    border: 1px solid #333;
+    max-height: 300px;
+    overflow-x: scroll;
+  }
+
+  #ingredients-select-list li {
+    cursor: pointer;
   }
 </style>
