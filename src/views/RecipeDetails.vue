@@ -70,8 +70,7 @@ export default {
       }
       if(!this.recipe && !this.secondTry) {
         this.secondTry = true
-        // this.unknownId = false
-        this.errorMsg = 'Ooops... Något gick fel...\nProva att ladda om receptet'
+        this.errorMsg = 'Ooops... Något gick fel... Prova att ladda om receptet'
         this.recipe = this.getRecipeById(id)
         return
       } 
