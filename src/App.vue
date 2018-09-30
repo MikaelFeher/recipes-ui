@@ -1,15 +1,8 @@
 <template>
-  <div id="app" class="navbar-fixed">
-    <div id="wrapper"></div>
-     <nav class="orange">
-        <div class="nav-wrapper row">
-          <router-link to="/" class="brand-logo center white-text col s12">RECEPT &amp; NÄRING</router-link>
-          <div v-if="isHomeOne()" class="input-field right col m3" >
-            <input type="text" id="search" class="white">
-            <label for="search" class="center">Sök recept</label>
-          </div>
-        </div>
-      </nav>
+  <div id="app">
+    <div :class="{ 'wrapper-big' : isHomePage, 'wrapper-small' : !isHomePage }">
+      <Nav :key="$route.fullPath" />
+    </div>
     <router-view/>
   </div>
 </template>
@@ -17,16 +10,28 @@
 <script>
 import { mapActions } from 'vuex'
 import Home from '@/views/Home.vue'
+import Nav from '@/components/Nav'
+
 
 export default {
+  components: {
+    Nav
+  },
+  data() {
+    return {
+      isHomePage: false
+    }
+  },
+  computed: {
+    homeRoute: function() {
+      return this.isHomePage = $route.fullPath === '/'
+    },
+  },
   created() {
     this.fetchRecipesFromAPI()
   },
   methods: {
-    ...mapActions(['fetchRecipesFromAPI']),
-    isHomeOne() {
-      return window.location.pathname === '/home1';
-    }
+    ...mapActions(['fetchRecipesFromAPI'])
   }
 }
 </script>
@@ -46,19 +51,14 @@ body {
   text-align: center;
   color: #2c3e50;
 }
-
-#wrapper {
-  height: 40px;
-  margin-bottom: 2%;
+.wrapper-big {
+  height: 239px;
+  margin-bottom: 1%;
 }
 
-nav {
-  top: 0;
-  z-index: 100;
-}
-
-.brand-logo {
-  text-shadow: 1px 1px#2c3e50;
+.wrapper-small {
+  height: 45;
+  margin-bottom: 1%;
 }
 
 </style>
