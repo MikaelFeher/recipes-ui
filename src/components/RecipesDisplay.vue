@@ -6,17 +6,17 @@
         <img v-else class="activator" src="@/assets/table-of-food.jpg">
       </div>
       <div class="card-content">
-        <span class="card-title activator grey-text text-darken-4">{{ recipe.name }}<i class="material-icons right">more_vert</i></span>
+        <span class="card-title activator grey-text text-darken-4">{{ recipe.name }}</span>
         <p>{{ recipe.description }}</p>
-        <router-link :to="'/recipe/' + recipe._id">Gå till receptet</router-link>
+        <div>
+          <router-link :to="'/recipe/' + recipe._id" id="recipe-link">Gå till receptet</router-link>
+        </div>
       </div>
       <div class="card-reveal">
         <span class="card-title grey-text text-darken-4">{{ recipe.name }}<i class="material-icons right">close</i></span>
+        <p>Det här behöver du:</p>
         <ul>
           <li v-for="(ingredient, index) in recipe.ingredients" :key="index">{{ ingredient.name }} {{ ingredient.units }}{{ ingredient.measuringUnit }}</li>
-        </ul>
-        <ul>
-          <li v-for="(instruction, index) in recipe.instructions" :key="index" class="left-align">{{ index + 1 }}. {{ instruction }}</li>
         </ul>
       </div>
     </div>
@@ -48,5 +48,10 @@ export default {
 img {
   max-height: 170px;
   size: 100%;
+}
+#recipe-link {
+  position: absolute;
+  left: calc(100% / 3.4);
+  bottom: 20px;
 }
 </style>
