@@ -26,6 +26,8 @@
 <script>
 import { mapState } from 'vuex'
 
+// TODO: Add the nutritional values to the recipe display
+
 export default {
   name: 'RecipesDisplay',
   computed: {

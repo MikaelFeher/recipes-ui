@@ -39,6 +39,8 @@
 <script>
 import { mapGetters } from 'vuex'
 
+// TODO: Add the nutritional values to the recipe display
+
 export default {
   name: 'RecipeDetails',
   data() {
