@@ -48,7 +48,7 @@ export default new Vuex.Store({
       commit('FILTER_RECIPES', filtered)
     },
     filterIngredientsByName({ commit, state }, ingredientToFind) {
-      const filtered = state.ingredients.filter(ingredient => ingredient.Namn.toLowerCase().indexOf(ingredientToFind.toLowerCase()) === 0)
+      const filtered = state.ingredients.filter(ingredient => ingredient.Namn.toLowerCase().includes(ingredientToFind.toLowerCase()))
       commit('FILTER_INGREDIENTS', filtered)
     },
     clearOutFilteredIngredients({ commit }) {
