@@ -6,8 +6,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    recipes:[],
-    recipesFilterByName: []
+    recipes: [],
+    recipesFilterByName: [],
+    ingredients: [],
+    ingredientsFilteredByName: []
   },
   getters: {
     getRecipeById: state => id => {
@@ -19,8 +21,17 @@ export default new Vuex.Store({
     POPULATE_RECIPES(state, recipes) {
       state.recipes = recipes.data
     },
+    POPULATE_INGREDIENTS(state, ingredients) {
+      state.ingredients = ingredients.data
+    },
     FILTER_RECIPES(state, filteredResult) {
       state.recipesFilterByName = filteredResult
+    },
+    FILTER_INGREDIENTS(state, filteredResult) {
+      state.ingredientsFilteredByName = filteredResult
+    },
+    CLEAR_FILTERED_INGREDIENTS(state) {
+      state.ingredientsFilteredByName = []
     }
   },
   actions: {
@@ -28,9 +39,22 @@ export default new Vuex.Store({
       const recipes = await axios.get('http://localhost:3003/recipes/')
       commit('POPULATE_RECIPES', recipes)
     },
+    async fetchIngredientsFromAPI({ commit }) {
+      const ingredients = await axios.get('http://localhost:3003/ingredients/')
+      commit('POPULATE_INGREDIENTS', ingredients)
+    },
     filterRecipesByName({ commit, state }, recipeToFind) {
       const filtered = state.recipes.filter(recipe => recipe.name.toLowerCase().indexOf(recipeToFind.toLowerCase()) === 0)
       commit('FILTER_RECIPES', filtered)
+    },
+    filterIngredientsByName({ commit, state }, ingredientToFind) {
+      console.log('ingredients: ', state.ingredients)
+      const filtered = state.ingredients.filter(ingredient => ingredient.Namn.toLowerCase().indexOf(ingredientToFind.toLowerCase()) === 0)
+      console.log('filtered: ', filtered)
+      commit('FILTER_INGREDIENTS', filtered)
+    },
+    clearOutFilteredIngredients({ commit }) {
+      commit('CLEAR_FILTERED_INGREDIENTS')
     },
     async addNewRecipe({ dispatch }, newRecipe) {
       await axios.post('http://localhost:3003/recipes/admin/recipe/add-new-recipe', newRecipe)

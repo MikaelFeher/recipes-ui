@@ -56,19 +56,26 @@
       <form @submit.prevent="addIngredient">
         <div class="input-field">
           <label for="ingredient-name">Ingrediens</label>
-          <input type="text" class="" id="ingredient-name" v-model="ingredient.name">
+          <input type="text" id="ingredient-name" v-model="tempIngredientName" @input="findIngredient">
         </div>
+        <ul >
+          <li v-for="(ingredient, index) in ingredientsFilteredByName" :key="index" @click="addIngredientDetails(ingredient)">
+            {{ ingredient.Namn }}
+          </li>
+        </ul>
+        
+
         <div class="input-field">
           <label for="ingredient-units">Mängd</label>
-          <input type="number" class="" id="ingredient-units" v-model="ingredient.units">
+          <input type="number" id="ingredient-units" v-model="ingredient.units">
         </div>
         <div class="input-field">
           <label for="ingredient-measuringUnit">Måttenhet</label>
-          <input type="text" class="" id="ingredient-measuringUnit" v-model="ingredient.measuringUnit">
+          <input type="text" id="ingredient-measuringUnit" v-model="ingredient.measuringUnit">
         </div>
         <div class="input-field">
           <label for="ingredient-unitEquivalentInGrams">Motsvarar i gram</label>
-          <input type="number" class="" id="ingredient-unitEquivalentInGrams" v-model="ingredient.unitEquivalentInGrams">
+          <input type="number" id="ingredient-unitEquivalentInGrams" v-model="ingredient.unitEquivalentInGrams">
         </div>
         <button type="button" class="btn waves-effect waves-light" v-on:click="addIngredient">Lägg till ingrediens</button>
       </form>
@@ -94,7 +101,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
 
   export default {
     name: 'AddNewRecipe',
@@ -121,9 +128,11 @@
           name: '',
           units: '',
           measuringUnit: '',
-          unitEquivalentInGrams: ''
+          unitEquivalentInGrams: '',
+          nutritionalValues: []
         },
         instruction: '',
+        tempIngredientName: ''
         // name: '',
         // numberOfPeople: '',
         // ingredientName: '',
@@ -139,16 +148,30 @@
         // difficultyLevel: ''
       }
     },
+    computed: {
+      ...mapState(['ingredientsFilteredByName'])
+    },
     methods: {
-      ...mapActions(['addNewRecipe']),
+      ...mapActions(['addNewRecipe', 'filterIngredientsByName', 'clearOutFilteredIngredients']),
+      findIngredient() {
+        this.filterIngredientsByName(this.tempIngredientName)
+      },
+      addIngredientDetails(ingredient) {
+        this.ingredient.name = ingredient.Namn
+        this.ingredient.nutritionalValues = ingredient.Naringsvarden.Naringsvarde
+        console.log('this.ingredient: ', this.ingredient)
+        this.clearOutFilteredIngredients()
+      },
       addIngredient() {
         this.newRecipe.ingredients = this.newRecipe.ingredients.concat(this.ingredient)
         this.ingredient =  {
           name: '',
           units: '',
           measuringUnit: '',
-          unitEquivalentInGrams: ''
+          unitEquivalentInGrams: '',
+          nutritionalValues: []
         }
+        this.tempIngredientName = ''
       },
       addInstruction() {
         if(this.instruction.length < 2) return;
@@ -175,7 +198,8 @@
           name: '',
           units: '',
           measuringUnit: '',
-          unitEquivalentInGrams: ''
+          unitEquivalentInGrams: '',
+          nutritionalValues: []
         },
         this.instruction = ''
       }

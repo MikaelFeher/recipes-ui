@@ -29,10 +29,10 @@ export default {
   },
   created() {
     this.fetchRecipesFromAPI()
-    M.AutoInit();
+    this.fetchIngredientsFromAPI()
   },
   methods: {
-    ...mapActions(['fetchRecipesFromAPI'])
+    ...mapActions(['fetchRecipesFromAPI', 'fetchIngredientsFromAPI'])
   }
 }
 </script>
