@@ -1,25 +1,36 @@
 <template>
-  <div id="recipe-details" class="container row">
-    <div class="col m5 offset-m1 s10 offset-s1" id="left-section">
-      <img v-if="recipe.img" :src="recipe.img" alt="picture of food">
-      <img v-else src="@/assets/table-of-food.jpg" alt="picture of food">
-    </div>
-    <div class="col m6 s10 offset-s1" id="right-section">
-      <h3>{{ recipe.name }}</h3>
-      <p>{{ recipe.description }}</p>
+  <div id="recipe-details" class="container">
+    <div v-if="!recipe" class="center" id="">
       <div class="row">
-        <ul>
-          <li v-for="(ingredient, index) in recipe.ingredients" :key="index" class="row ingredient-item">
-            <p class="col s6">{{ ingredient.name }}</p> <p class="col s4">{{ ingredient.units }}{{ ingredient.measuringUnit }}</p>
-          </li>
-        </ul>
+        <p>{{ errorMsg }}</p>
       </div>
       <div class="row">
-        <ul>
-          <li v-for="(instruction, index) in recipe.instructions" :key="index" class="row instruction-item">
-            <p class="col s12">{{ ++index }}. {{ instruction }}</p>
-          </li>
-        </ul>
+        <router-link v-if="unknownId" class="waves-effect waves-light btn blue" to="/">Tillbaka till första sidan</router-link>
+        <button v-else class="waves-effect waves-light btn blue" @click="getRecipe">Ladda om receptet</button>
+      </div>
+    </div>
+    <div v-else class="row">
+      <div class="col m5 offset-m1 s10 offset-s1" id="left-section">
+        <img v-if="recipe.img" :src="recipe.img" alt="picture of food">
+        <img v-else src="@/assets/table-of-food.jpg" alt="picture of food">
+      </div>
+      <div class="col m6 s10 offset-s1" id="right-section">
+        <h3>{{ recipe.name }}</h3>
+        <p>{{ recipe.description }}</p>
+        <div class="row">
+          <ul>
+            <li v-for="(ingredient, index) in recipe.ingredients" :key="index" class="row ingredient-item">
+              <p class="col s6">{{ ingredient.name }}</p> <p class="col s4">{{ ingredient.units }} {{ ingredient.measuringUnit }}</p>
+            </li>
+          </ul>
+        </div>
+        <div class="row">
+          <ul>
+            <li v-for="(instruction, index) in recipe.instructions" :key="index" class="row instruction-item">
+              <p class="col s12">{{ ++index }}. {{ instruction }}</p>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -33,7 +44,11 @@ export default {
   data() {
     return {
       recipe: {},
-      placeholderImg: '@/assets/table-of-food.jpg'
+      placeholderImg: '@/assets/table-of-food.jpg',
+      unknownId: false,
+      secondTry: false,
+      errorMsg: ''
+
     }
   },
   computed: {
@@ -41,12 +56,33 @@ export default {
   },
   mounted: function() {
     this.getRecipe()
+    console.log('mounted called');
   },
   methods: {
-    getRecipe() {
+    async getRecipe() {
       const { id } = this.$route.params;
       this.recipe = this.getRecipeById(id)
-      console.log(this.recipe)
+
+      if(this.secondTry && !this.recipe) {
+        this.unknownId = true
+        this.errorMsg = 'Receptet verkar inte finnas...'
+        return
+      }
+      if(!this.recipe && !this.secondTry) {
+        this.secondTry = true
+        // this.unknownId = false
+        this.errorMsg = 'Ooops... Något gick fel...\nProva att ladda om receptet'
+        this.recipe = this.getRecipeById(id)
+        return
+      } 
+      this.secondTry = false
+      this.unknownId = false
+    },
+    redirectToHome() {
+      this.$router.replace('home')
+    },
+    test() {
+      console.log('test id:', this.$route.params.id)
     }
   },
 }
