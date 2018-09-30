@@ -36,6 +36,12 @@ export default new Vuex.Store({
       await axios.post('http://localhost:3003/recipes/admin/recipe/add-new-recipe', newRecipe)
         .catch(err => console.log(err))
       dispatch('fetchRecipesFromAPI')
+    },
+    async deleteRecipe({ dispatch },id) {
+      await axios.delete(`http://localhost:3003/recipes/admin/recipe/delete-recipe/${id}`)
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err))
+      dispatch('fetchRecipesFromAPI')
     }
   },
 });
