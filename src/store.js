@@ -34,6 +34,7 @@ export default new Vuex.Store({
     },
     async addNewRecipe({ dispatch }, newRecipe) {
       await axios.post('http://localhost:3003/recipes/admin/recipe/add-new-recipe', newRecipe)
+        .then(res => console.log(res.data))
         .catch(err => console.log(err))
       dispatch('fetchRecipesFromAPI')
     },
