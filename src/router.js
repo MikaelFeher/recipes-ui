@@ -5,6 +5,7 @@ import Home1 from '@/views/Home.1.vue'
 import RecipeDetails from '@/views/RecipeDetails.vue'
 import Admin from '@/views/admin/Admin.vue'
 import AddRecipe from '@/components/admin/AddRecipe.vue'
+import DeleteRecipe from '@/components/admin/DeleteRecipe.vue'
 
 
 
@@ -38,6 +39,11 @@ export default new Router({
       path: '/admin/add-new-recipe',
       name: 'add-new-recipe',
       component: AddRecipe
+    },
+    {
+      path: '/admin/delete-recipe',
+      name: 'delete-recipe',
+      component: DeleteRecipe
     },
     {
       path: '*',

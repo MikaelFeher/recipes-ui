@@ -1,7 +1,8 @@
 <template>
   <div id="admin">
     <h1>Admin Page</h1>
-    <router-link to="/admin/add-new-recipe">Lägg till nytt recept</router-link>
+    <router-link to="/admin/add-new-recipe" class="waves-effect waves-light btn green" >Lägg till nytt recept</router-link>
+    <router-link to="/admin/delete-recipe" class="waves-effect waves-light btn red" >Ta bort recept recept</router-link>
   </div>
 </template>
 
