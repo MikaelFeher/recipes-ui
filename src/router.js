@@ -25,6 +25,10 @@ export default new Router({
       path: '/recipe/:id',
       name: 'recipe',
       component: RecipeDetails
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ],
 });
