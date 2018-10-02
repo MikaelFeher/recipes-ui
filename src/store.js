@@ -20,9 +20,11 @@ export default new Vuex.Store({
   mutations: {
     POPULATE_RECIPES(state, recipes) {
       state.recipes = recipes.data
+      console.log(!state.recipes.length ? 'No recipes...' : 'Recipes loaded ok!')
     },
     POPULATE_INGREDIENTS(state, ingredients) {
       state.ingredients = ingredients.data
+      console.log(!state.ingredients.length ? 'No ingredients...' : 'Ingredients loaded ok!')
     },
     FILTER_RECIPES(state, filteredResult) {
       state.recipesFilterByName = filteredResult
@@ -48,7 +50,7 @@ export default new Vuex.Store({
       commit('FILTER_RECIPES', filtered)
     },
     filterIngredientsByName({ commit, state }, ingredientToFind) {
-      const filtered = state.ingredients.filter(ingredient => ingredient.Namn.toLowerCase().includes(ingredientToFind.toLowerCase()))
+      const filtered = state.ingredients.filter(ingredient => ingredient.name.toLowerCase().includes(ingredientToFind.toLowerCase()))
       commit('FILTER_INGREDIENTS', filtered)
     },
     clearOutFilteredIngredients({ commit }) {
