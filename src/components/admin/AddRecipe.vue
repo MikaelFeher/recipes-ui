@@ -58,21 +58,21 @@
       <form @submit.prevent="addIngredient">
         <div class="input-field">
           <label for="ingredient-name">Ingrediens</label>
-          <input type="text" id="ingredient-name" v-model="ingredient.name" @input="findIngredient">
-        </div>
+          <input type="text" id="ingredient-name" v-model="ingredient.name" @input="findIngredient" />
         <ul v-if="showList" id="ingredients-select-list">
           <li v-for="(ingredient, index) in ingredientsFilteredByName" :key="index" @click="addIngredientDetails(ingredient)" class="left-align">
-            {{ ingredient.Namn }}
+            {{ ingredient.name }}
             <hr/>
           </li>
         </ul>
+        </div>
         <div class="input-field">
           <label for="ingredient-units">Mängd</label>
           <input type="number" id="ingredient-units" v-model="ingredient.units">
         </div>
         <div class="input-field">
           <label for="ingredient-measuringUnit">Måttenhet</label>
-          <input type="text" id="ingredient-measuringUnit" v-model="ingredient.measuringUnit">
+          <input type="text" id="ingredient-measuringUnit" v-model="ingredient.measuringUnit" @change="setUnitEquivalentInGrams">
         </div>
         <div class="input-field">
           <label for="ingredient-unitEquivalentInGrams">Motsvarar i gram</label>
@@ -147,9 +147,15 @@
         this.showList = true
         this.filterIngredientsByName(this.ingredient.name)
       },
+      setUnitEquivalentInGrams() {
+        if(this.ingredient.measuringUnit === 'g' || this.ingredient.measuringUnit === 'gram') {
+          this.ingredient.unitEquivalentInGrams = this.ingredient.units
+        }
+      },
       addIngredientDetails(ingredient) {
-        this.ingredient.name = ingredient.Namn
-        this.ingredient.nutritionalValues = ingredient.Naringsvarden.Naringsvarde
+        this.ingredient.name = ingredient.name
+        this.ingredient.nutritionalValues = ingredient.nutritionalValues
+          .reduce((acc, nv) => acc.concat(Object.assign({}, nv)), [])
         this.clearOutFilteredIngredients()
         this.showList = false
       },
