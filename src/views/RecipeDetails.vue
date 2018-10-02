@@ -1,5 +1,5 @@
 <template>
-  <div id="recipe-details" class="container">
+  <div id="recipe-details" class="">
     <div v-if="!recipe" class="center" id="">
       <div class="row">
         <p>{{ errorMsg }}</p>
@@ -10,19 +10,18 @@
       </div>
     </div>
     <div v-else class="row">
-      <div class="col m5 offset-m1 s10 offset-s1" id="left-section">
+      <div class="col m4 offset-m1 s10 offset-s1" id="left-section">
         <div class="row">
           <img v-if="recipe.img" :src="recipe.img" alt="picture of food">
           <img v-else src="@/assets/table-of-food.jpg" alt="picture of food">
         </div>
-        <div class="row">
+        <div class=" row">
           <p><b>Näringsinnehåll</b></p>
           <p>Näringsvärde per 100gram</p>
-          <table class="responsive-table striped">
+          <table class="col s12 striped">
             <thead>
               <tr>
-                <th>Näringsämne</th>
-              
+                <th colspan="4">Näringsämne</th>
                 <th>gram</th>
               </tr>
             </thead>
@@ -166,7 +165,6 @@ export default {
 #right-section {
   padding: 0 3% 3% 3%;
   height: 70vh;
-  overflow-y: scroll;
 }
 
 img {
