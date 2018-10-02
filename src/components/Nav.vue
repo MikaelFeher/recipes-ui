@@ -15,7 +15,7 @@
             <button 
               v-for="(category, index) in categories" 
               :key="index" 
-              class="tab col s3 white-text waves-effect waves-light btn-flat" 
+              class="tab col s2  white-text waves-effect waves-light btn-flat" 
               @click="filterByCategory(category)"
             >
               {{ category }}
@@ -49,7 +49,8 @@ export default {
         'Frukost',
         'Lunch',
         'Middag',
-        'Fest'
+        'Fest',
+        'alla'
       ]
     }
   },
@@ -93,10 +94,11 @@ nav {
 #tabs-bar {
   margin-bottom: 4%;
 }
-#tabs-bar li {
+#tabs-bar button {
   cursor: pointer;
   text-shadow: 1px 1px black;
   font-size: 1.2rem;
   letter-spacing: .1rem;
+  margin: auto 1.5%;
 }
 </style>

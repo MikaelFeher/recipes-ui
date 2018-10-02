@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div :class="{ 'wrapper-big' : isHomePage, 'wrapper-small' : !isHomePage }">
+    <div :class="{ 'wrapper-big' : $route.fullPath === '/', 'wrapper-small' : !$route.fullPath === '/' }">
       <Nav :key="$route.fullPath" />
     </div>
     <router-view/>
@@ -9,7 +9,6 @@
 
 <script>
 import { mapActions } from 'vuex'
-// import Home from '@/views/Home.vue'
 import Nav from '@/components/Nav'
 
 
@@ -53,12 +52,12 @@ body {
   color: #2c3e50;
 }
 .wrapper-big {
-  height: 239px;
+  height: 130px;
   margin-bottom: 1%;
 }
 
 .wrapper-small {
-  height: 120px;
+  height: 75px;
   margin-bottom: 1%;
 }
 

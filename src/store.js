@@ -50,6 +50,10 @@ export default new Vuex.Store({
       commit('FILTER_RECIPES', filtered)
     },
     filterRecipesByCategory({ commit, state }, category) {
+      if(category === 'alla') {
+        commit('FILTER_RECIPES', [])
+        return
+      }
       const filtered = state.recipes.filter(recipe => recipe.categories && recipe.categories.includes(category.toLowerCase()))
       if(!filtered.length) return
       commit('FILTER_RECIPES', filtered)
