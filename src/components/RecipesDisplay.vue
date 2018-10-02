@@ -1,6 +1,6 @@
 <template>
   <div id="recipes-display" class="container row">
-    <div class="card col xl3 l4 m6 s10 offset-s1" v-for="recipe in !!recipesFilterByName.length ? recipesFilterByName : recipes" :key="recipe._id">
+    <div class="card col xl3 l4 m6 s10 offset-s1" v-for="recipe in !!filteredRecipes.length ? filteredRecipes : recipes" :key="recipe._id">
       <div class="card-image waves-effect waves-block waves-light">
         <img v-if="recipe.img" class="activator" :src="recipe.img">
         <img v-else class="activator" src="@/assets/table-of-food.jpg">
@@ -31,7 +31,7 @@ export default {
   computed: {
     ...mapState([
       'recipes',
-      'recipesFilterByName'
+      'filteredRecipes'
     ])
   }
 }

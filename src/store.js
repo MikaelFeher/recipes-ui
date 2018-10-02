@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     recipes: [],
-    recipesFilterByName: [],
+    filteredRecipes: [],
     ingredients: [],
     ingredientsFilteredByName: []
   },
@@ -27,7 +27,7 @@ export default new Vuex.Store({
       console.log(!state.ingredients.length ? 'No ingredients...' : 'Ingredients loaded ok!')
     },
     FILTER_RECIPES(state, filteredResult) {
-      state.recipesFilterByName = filteredResult
+      state.filteredRecipes = filteredResult
     },
     FILTER_INGREDIENTS(state, filteredResult) {
       state.ingredientsFilteredByName = filteredResult
@@ -47,6 +47,11 @@ export default new Vuex.Store({
     },
     filterRecipesByName({ commit, state }, recipeToFind) {
       const filtered = state.recipes.filter(recipe => recipe.name.toLowerCase().indexOf(recipeToFind.toLowerCase()) === 0)
+      commit('FILTER_RECIPES', filtered)
+    },
+    filterRecipesByCategory({ commit, state }, category) {
+      const filtered = state.recipes.filter(recipe => recipe.categories && recipe.categories.includes(category.toLowerCase()))
+      if(!filtered.length) return
       commit('FILTER_RECIPES', filtered)
     },
     filterIngredientsByName({ commit, state }, ingredientToFind) {

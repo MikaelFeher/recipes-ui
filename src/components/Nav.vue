@@ -11,12 +11,22 @@
       </div>
       <div v-if="$route.fullPath === '/'" class="row" >
         <div class="col s12">
-          <ul class="tabs orange col m6 offset-m3" id="tabs-bar">
-            <li class="tab col s3 white-text waves-effect waves-light">Frukost</li>
-            <li class="tab col s3 white-text waves-effect waves-light">Lunch</li>
-            <li class="tab col s3 white-text waves-effect waves-light">Middag</li>
-            <li class="tab col s3 white-text waves-effect waves-light">Fest</li>
-          </ul>
+          <div class="tabs orange col m6 offset-m3" id="tabs-bar">
+            <button 
+              v-for="(category, index) in categories" 
+              :key="index" 
+              class="tab col s3 white-text waves-effect waves-light btn-flat" 
+              @click="filterByCategory(category)"
+            >
+              {{ category }}
+            </button>
+          </div>
+          <!-- <ul class="tabs orange col m6 offset-m3" id="tabs-bar">
+            <li class="tab col s3 white-text waves-effect waves-light" @click="filterRecipesByCategory('frukost')">Frukost</li>
+            <li class="tab col s3 white-text waves-effect waves-light" @click="filterRecipesByCategory('lunch')">Lunch</li>
+            <li class="tab col s3 white-text waves-effect waves-light" @click="filterRecipesByCategory('middag')">Middag</li>
+            <li class="tab col s3 white-text waves-effect waves-light" @click="filterRecipesByCategory('fest')">Fest</li>
+          </ul> -->
         </div>
       </div>
     </nav>
@@ -34,22 +44,28 @@ export default {
   },
    data() {
     return {
-      recipeToFind: ''
+      recipeToFind: '',
+      categories: [
+        'Frukost',
+        'Lunch',
+        'Middag',
+        'Fest'
+      ]
     }
   },
   mounted: function() {
-    M.Tabs.init(el, options);
+    // M.Tabs.init(el, options);
   },
   computed: {
     ...mapState(['recipes'])
   },
   methods: {
-    ...mapActions(['filterRecipesByName']),
+    ...mapActions(['filterRecipesByName', 'filterRecipesByCategory']),
     findARecipe() {
       this.filterRecipesByName(this.recipeToFind)
     },
-    filterRecipesByCategory(category) {
-      this.recipe = 
+    filterByCategory(category) {
+      this.filterRecipesByCategory(category)
     }
   },
 }
