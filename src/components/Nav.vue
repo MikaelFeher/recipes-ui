@@ -6,8 +6,6 @@
         <router-link to="/" class="brand-logo center white-text col s12">RECEPT &amp; NÄRING</router-link>
       </div>
       <Hero v-if="false" />
-      <!-- <div v-if="isHome" class="row" id="hero-wrapper">
-      </div> -->
     </nav>
   </div>
 </template>
