@@ -16,7 +16,7 @@
         <span class="card-title grey-text text-darken-4">{{ recipe.name }}<i class="material-icons right">close</i></span>
         <p>Det här behöver du:</p>
         <ul>
-          <li v-for="(ingredient, index) in recipe.ingredients" :key="index">{{ ingredient.name }} {{ ingredient.units }}{{ ingredient.measuringUnit }}</li>
+          <li v-for="(ingredient, index) in recipe.ingredients" :key="index" class="left-align">{{ ingredient.name }}  <span class="right">{{ ingredient.units }}{{ ingredient.measuringUnit }}</span>  </li>
         </ul>
       </div>
     </div>
@@ -46,7 +46,7 @@ export default {
   min-height: 350px;
 }
 img {
-  max-height: 170px;
+  height: 170px;
   size: 100%;
 }
 #recipe-link {
