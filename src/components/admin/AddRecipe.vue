@@ -46,7 +46,7 @@
           <thead>
             <th>Ingrediens</th>
             <th>Mängd</th>
-            <th>Gram/enhet</th>
+            <th>Motsvarar i gram</th>
           </thead>
           <tbody v-for="(ingredient, index) in newRecipe.ingredients" :key="index">
             <td>{{ ingredient.name }}</td>
