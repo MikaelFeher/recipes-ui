@@ -1,6 +1,6 @@
 <template>
   <div id="recipes-display" class="container row">
-    <div class="card col xl3 l4 m6 s10 offset-s1" v-for="recipe in !!recipesFilterByName.length ? recipesFilterByName : recipes" :key="recipe._id">
+    <div class="card col xl3 l4 m6 s10 offset-s1" v-for="recipe in !!filteredRecipes.length ? filteredRecipes : recipes" :key="recipe._id">
       <div class="card-image waves-effect waves-block waves-light">
         <img v-if="recipe.img" class="activator" :src="recipe.img">
         <img v-else class="activator" src="@/assets/table-of-food.jpg">
@@ -16,7 +16,7 @@
         <span class="card-title grey-text text-darken-4">{{ recipe.name }}<i class="material-icons right">close</i></span>
         <p>Det här behöver du:</p>
         <ul>
-          <li v-for="(ingredient, index) in recipe.ingredients" :key="index">{{ ingredient.name }} {{ ingredient.units }}{{ ingredient.measuringUnit }}</li>
+          <li v-for="(ingredient, index) in recipe.ingredients" :key="index" class="left-align">{{ ingredient.name }}  <span class="right">{{ ingredient.units }}{{ ingredient.measuringUnit }}</span>  </li>
         </ul>
       </div>
     </div>
@@ -33,7 +33,7 @@ export default {
   computed: {
     ...mapState([
       'recipes',
-      'recipesFilterByName'
+      'filteredRecipes'
     ])
   }
 }
@@ -48,7 +48,7 @@ export default {
   min-height: 350px;
 }
 img {
-  max-height: 170px;
+  height: 170px;
   size: 100%;
 }
 #recipe-link {

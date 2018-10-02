@@ -1,5 +1,5 @@
 <template>
-  <div id="recipe-details" class="container">
+  <div id="recipe-details" class="">
     <div v-if="!recipe" class="center" id="">
       <div class="row">
         <p>{{ errorMsg }}</p>
@@ -10,21 +10,45 @@
       </div>
     </div>
     <div v-else class="row">
-      <div class="col m5 offset-m1 s10 offset-s1" id="left-section">
-        <img v-if="recipe.img" :src="recipe.img" alt="picture of food">
-        <img v-else src="@/assets/table-of-food.jpg" alt="picture of food">
+      <div class="col m4 offset-m1 s10 offset-s1" id="left-section">
+        <div class="row">
+          <img v-if="recipe.img" :src="recipe.img" alt="picture of food">
+          <img v-else src="@/assets/table-of-food.jpg" alt="picture of food">
+        </div>
+        <div class=" row">
+          <p><b>Näringsinnehåll</b></p>
+          <p>Näringsvärde per 100gram</p>
+          <table class="col s12 striped">
+            <thead>
+              <tr>
+                <th colspan="4">Näringsämne</th>
+                <th>gram</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(key, value) in recipe.totalNutritionalValuesPerHundredGrams" :key="value">
+                <td colspan="4">{{ value }}</td>
+                <td>{{ key }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       <div class="col m6 s10 offset-s1" id="right-section">
         <h3>{{ recipe.name }}</h3>
-        <p>{{ recipe.description }}</p>
         <div class="row">
+          <p>{{ recipe.description }}</p>
+        </div>
+        <div class="row">
+          <p><b>Det här behöver du:</b></p>
           <ul>
             <li v-for="(ingredient, index) in recipe.ingredients" :key="index" class="row ingredient-item">
-              <p class="col s6">{{ ingredient.name }}</p> <p class="col s4">{{ ingredient.units }} {{ ingredient.measuringUnit }}</p>
+              <p class="">{{ ingredient.units }}{{ ingredient.measuringUnit }} <span> {{ ingredient.name }}</span></p>
             </li>
           </ul>
         </div>
         <div class="row">
+          <p><b>Så här gör du:</b></p>
           <ul>
             <li v-for="(instruction, index) in recipe.instructions" :key="index" class="row instruction-item">
               <p class="col s12">{{ ++index }}. {{ instruction }}</p>
@@ -59,6 +83,7 @@ export default {
   mounted: function() {
     this.getRecipe()
     console.log('mounted called');
+    // if(this.recipe) 
   },
   methods: {
     async getRecipe() {
@@ -78,15 +103,55 @@ export default {
       } 
       this.secondTry = false
       this.unknownId = false
+      this.calculateNutritionalValuesForRecipe()
     },
     redirectToHome() {
       this.$router.replace('home')
     },
     test() {
       console.log('test id:', this.$route.params.id)
+    },
+    async calculateNutritionalValuesForRecipe() {
+    
+      let totalIngredientWeightInGrams = 0
+
+      const result = await this.recipe.ingredients.map(ingredient => {
+        totalIngredientWeightInGrams += ingredient.unitEquivalentInGrams
+        const amountInGrams = ingredient.unitEquivalentInGrams
+
+        // Need to know how many 100grams of the ingredient is in the recipe...
+        const amountToCalculate = amountInGrams/100
+        return ingredient.nutritionalValues
+          .reduce((acc,value) => Object.assign(
+            {}, 
+            acc, 
+            { [value.name]: value.value * amountToCalculate }
+            ), {}
+          )
+      })
+      
+      const calcTotal = value => result.reduce((acc, object) => acc + object[value], 0)
+      
+      let totalResult = {
+        'Energi (kcal)': 0,
+        'Kolhydrater': 0,
+        'Protein': 0,
+        'Salt': 0,
+        'Socker totalt': 0,
+        'Summa enkelomättade fettsyror': 0,
+        'Summa fleromättade fettsyror': 0,
+        'Summa mättade fettsyror': 0
+      }
+      
+      const modifier = totalIngredientWeightInGrams / 100
+
+      totalResult = Object.keys(totalResult).reduce((acc, value) => Object.assign({}, acc, { [value] : ((calcTotal(value) / totalIngredientWeightInGrams) * 100).toFixed(2) }), {})
+    
+      this.recipe = Object.assign({}, this.recipe, { totalNutritionalValuesPerHundredGrams : totalResult })
     }
   },
 }
+
 </script>
 
 <style scoped>
@@ -102,7 +167,6 @@ export default {
 #right-section {
   padding: 0 3% 3% 3%;
   height: 70vh;
-  overflow-y: scroll;
 }
 
 img {
