@@ -58,7 +58,7 @@ body {
 }
 
 .wrapper-small {
-  height: 45;
+  height: 120px;
   margin-bottom: 1%;
 }
 

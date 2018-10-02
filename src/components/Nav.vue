@@ -1,22 +1,57 @@
 <template>
   <div class="navbar-fixed">
-    <nav class="orange">
+    <nav class=" orange darken-3">
       <div class="nav-wrapper row">
-        <router-link to="/admin" class="left">Admin Sidor</router-link>
+        <!-- <router-link to="/admin" class="left">Admin Sidor</router-link> -->
         <router-link to="/" class="brand-logo center white-text col s12">RECEPT &amp; NÄRING</router-link>
+        <div v-if="$route.fullPath === '/'" class="input-field col s3 right" id="search-bar">
+          <input type="text" id="search" class="white" v-model="recipeToFind" @input="findARecipe()" autocomplete="off">
+          <label for="search" class="orange-text">Sök recept...</label>
+        </div>
       </div>
-      <Hero v-if="false" />
+      <div v-if="$route.fullPath === '/'" class="row" >
+        <div class="col s12">
+          <ul class="tabs orange col m6 offset-m3" id="tabs-bar">
+            <li class="tab col s3 white-text waves-effect waves-light">Frukost</li>
+            <li class="tab col s3 white-text waves-effect waves-light">Lunch</li>
+            <li class="tab col s3 white-text waves-effect waves-light">Middag</li>
+            <li class="tab col s3 white-text waves-effect waves-light">Fest</li>
+          </ul>
+        </div>
+      </div>
     </nav>
+      <!-- <Hero  /> -->
   </div>
 </template>
 
 <script>
 import Hero from '@/components/Hero'
+import { mapActions, matState, mapState } from 'vuex'
 
 export default {
   components: {
     Hero
-  }
+  },
+   data() {
+    return {
+      recipeToFind: ''
+    }
+  },
+  mounted: function() {
+    M.Tabs.init(el, options);
+  },
+  computed: {
+    ...mapState(['recipes'])
+  },
+  methods: {
+    ...mapActions(['filterRecipesByName']),
+    findARecipe() {
+      this.filterRecipesByName(this.recipeToFind)
+    },
+    filterRecipesByCategory(category) {
+      this.recipe = 
+    }
+  },
 }
 </script>
 
@@ -30,11 +65,22 @@ nav {
   text-shadow: 2px 2px#2c3e50;
 }
 
-.nav-wrapper {
-  margin: 0;
-}
 
 .row {
   margin-bottom: 0 !important;
+}
+
+.nav-wrapper {
+  margin-bottom: 2%;
+}
+
+#tabs-bar {
+  margin-bottom: 4%;
+}
+#tabs-bar li {
+  cursor: pointer;
+  text-shadow: 1px 1px black;
+  font-size: 1.2rem;
+  letter-spacing: .1rem;
 }
 </style>
