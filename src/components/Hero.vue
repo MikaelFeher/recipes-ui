@@ -42,7 +42,7 @@ export default {
     background: url(../assets/table-of-food.jpg) no-repeat;
     background-size: cover;
     background-size: 100%;
-    /* margin-bottom: 3%; */
+    margin-bottom: 3%;
     padding: 0;
     margin: 0;
   }
