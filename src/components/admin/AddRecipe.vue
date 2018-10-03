@@ -58,7 +58,7 @@
       <form @submit.prevent="addIngredient">
         <div class="input-field">
           <label for="ingredient-name">Ingrediens</label>
-          <input type="text" id="ingredient-name" v-model="ingredient.name" @input="findIngredient" />
+          <input type="text" id="ingredient-name" v-model="ingredient.name" @input="findIngredient" @blur="showList = false"/>
         <ul v-if="showList" id="ingredients-select-list">
           <li v-for="(ingredient, index) in ingredientsFilteredByName" :key="index" @click="addIngredientDetails(ingredient)" class="left-align">
             {{ ingredient.name }}
@@ -95,7 +95,7 @@
       <!-- Submit/Cancel buttons -->
       <div class="row">
         <button type="submit" class="waves-effect waves-light btn col s4 offset-s1">Spara<i class="material-icons right">send</i></button>
-        <button type="button" class="waves-effect waves-light btn red col s4 offset-s2">Avbryt<i class="material-icons right">cancel</i></button>
+        <router-link to="/admin" class="waves-effect waves-light btn red col s4 offset-s2">Avbryt<i class="material-icons right">cancel</i></router-link>
       </div>
     </form>
   </div>

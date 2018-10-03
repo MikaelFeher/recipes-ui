@@ -43,10 +43,14 @@
           <p>{{ recipe.description }}</p>
         </div>
         <div class="row">
+          <p><b>Tillagningstid:</b> {{ recipe.cookingTime }}</p>
+          <p><b class="col s3">Antal personer:</b> <input type="number" v-model="numberOfPeople" class="col s1 center" value="4" @change="updateNumbers"/></p>
+        </div>
+        <div class="row">
           <p><b>Det här behöver du:</b></p>
           <ul>
             <li v-for="(ingredient, index) in recipe.ingredients" :key="index" class="row ingredient-item">
-              <p class="">{{ ingredient.units }}{{ ingredient.measuringUnit }} <span> {{ ingredient.name }}</span></p>
+              <p class="">{{ ingredient.units * ingredientModifier }}{{ ingredient.measuringUnit }} <span> {{ ingredient.name }}</span></p>
             </li>
           </ul>
         </div>
@@ -76,8 +80,9 @@ export default {
       placeholderImg: '@/assets/table-of-food.jpg',
       unknownId: false,
       secondTry: false,
-      errorMsg: ''
-
+      errorMsg: '',
+      numberOfPeople: 4,
+      ingredientModifier: 1
     }
   },
   computed: {
@@ -86,7 +91,7 @@ export default {
   mounted: function() {
     this.getRecipe()
     console.log('mounted called');
-    // if(this.recipe) 
+    this.updateNumbers()
   },
   methods: {
     async getRecipe() {
@@ -111,8 +116,12 @@ export default {
     redirectToHome() {
       this.$router.replace('home')
     },
-    test() {
-      console.log('test id:', this.$route.params.id)
+    updateNumbers() {
+      this.numberOfPeople = this.numberOfPeople > 0 ? this.numberOfPeople : 1
+      this.updateIngredientModifier()
+    },
+    updateIngredientModifier() {
+      this.ingredientModifier = this.numberOfPeople / this.recipe.numberOfPeople
     },
     async calculateNutritionalValuesForRecipe() {
     
