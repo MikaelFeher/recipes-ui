@@ -46,7 +46,7 @@ export default new Vuex.Store({
       commit('POPULATE_INGREDIENTS', ingredients)
     },
     filterRecipesByName({ commit, state }, recipeToFind) {
-      const filtered = state.recipes.filter(recipe => recipe.name.toLowerCase().indexOf(recipeToFind.toLowerCase()) === 0)
+      const filtered = state.recipes.filter(recipe => recipe.name.toLowerCase().includes(recipeToFind.toLowerCase()))
       commit('FILTER_RECIPES', filtered)
     },
     filterRecipesByCategory({ commit, state }, category) {
