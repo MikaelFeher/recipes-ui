@@ -28,7 +28,7 @@
             <tbody>
               <tr v-for="(key, value) in recipe.totalNutritionalValuesPerHundredGrams" :key="value">
                 <td colspan="4">{{ value }}</td>
-                <td>{{ key }}</td>
+                <td>{{ key.replace('.', ',') }}</td>
               </tr>
             </tbody>
           </table>
@@ -36,6 +36,9 @@
       </div>
       <div class="col m6 s10 offset-s1" id="right-section">
         <h3>{{ recipe.name }}</h3>
+        
+          <span v-for="(category, index) in recipe.categories" :key="index" class="badge teal white-text"> {{ category }} </span>
+        
         <div class="row">
           <p>{{ recipe.description }}</p>
         </div>
@@ -51,7 +54,7 @@
           <p><b>Så här gör du:</b></p>
           <ul>
             <li v-for="(instruction, index) in recipe.instructions" :key="index" class="row instruction-item">
-              <p class="col s12">{{ ++index }}. {{ instruction }}</p>
+              <p class="col s12"><span class="light-blue-text">{{ ++index }}</span>. {{ instruction }}</p>
             </li>
           </ul>
         </div>
