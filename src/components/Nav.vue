@@ -10,8 +10,16 @@
         </div>
       </div>
       <div class="row">
+        <!-- Delete recipe notification -->
         <div v-if="showDeleteMessage" class="panel red lighten-4 red-text col s6 offset-s3" id="delete-recipe-message">
           <h5>Receptet raderat</h5>
+        </div>
+         <!-- Add recipe fail/success notification -->
+        <div v-if="addRecipeMessage.success" class="panel green lighten-4 green-text col s6 offset-s3">
+          <h5>{{ addRecipeMessage.success }}</h5>
+        </div>
+        <div v-if="addRecipeMessage.error" class="panel red lighten-4 red-text col s6 offset-s3">
+          <h5>{{ addRecipeMessage.error }}</h5>
         </div>
       </div>
       <div v-if="$route.fullPath === '/'" class="row" >
@@ -57,7 +65,7 @@ export default {
     // M.Tabs.init(el, options);
   },
   computed: {
-    ...mapState(['recipes', 'showDeleteMessage'])
+    ...mapState(['recipes', 'showDeleteMessage', 'addRecipeMessage'])
   },
   methods: {
     ...mapActions(['filterRecipesByName', 'filterRecipesByCategory']),
@@ -103,8 +111,24 @@ nav {
 
 #delete-recipe-message {
   padding: 0;
-  margin-top: 10%;
+  margin-top: 20%;
   font-size: 1.5rem;
+  border-radius: 3px;
+  box-shadow: 0 0 15px 0 red;
+  border: 1px solid red;
+}
+.panel {
+  padding: 0;
+  margin-top: 20%;
+  font-size: 1.5rem;
+}
+
+.panel.green {
+  border-radius: 3px;
+  box-shadow: 0 0 15px 0 green;
+  border: 1px solid green;
+}
+.panel.red {
   border-radius: 3px;
   box-shadow: 0 0 15px 0 red;
   border: 1px solid red;

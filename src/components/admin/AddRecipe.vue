@@ -5,27 +5,27 @@
       <!-- General info -->
       <div class="input-field">
         <label for="name">Vad heter rätten?</label>
-        <input type="text" class="" id="name" v-model="newRecipe.name"  minlength="2">
+        <input type="text" class="" id="name" v-model="newRecipe.name"  minlength="2" required oninvalid="this.setCustomValidity('Du måste ge receptet ett namn.')" onchange="this.setCustomValidity('')">
       </div>
       <div class="input-field">
         <label for="numberOfPeople">Antal personer: </label>
-        <input type="number" class="center-align" id="numberOfPeople" v-model="newRecipe.numberOfPeople" >
+        <input type="number" class="center-align" id="numberOfPeople" v-model="newRecipe.numberOfPeople" required oninvalid="this.setCustomValidity('Du måste ange hur många personer receptet är till.')" onchange="this.setCustomValidity('')">
       </div>
       <div class="input-field">
         <label for="description">Beskriv rätten</label>
-        <textarea id="description" class="materialize-textarea" v-model="newRecipe.description" ></textarea>
+        <textarea id="description" class="materialize-textarea" v-model="newRecipe.description" required oninvalid="this.setCustomValidity('Du måste beskriva rätten.')" onchange="this.setCustomValidity('')"></textarea>
       </div>
       <div class="input-field">
         <label for="img">Bild på rätten</label>
-        <input type="text" id="img" v-model="newRecipe.img" >
+        <input type="text" id="img" v-model="newRecipe.img" required oninvalid="this.setCustomValidity('Du måste lägga till en bild. Helst .jpg/.jpeg/.png format.')" onchange="this.setCustomValidity('')">
       </div>
       <div class="input-field">
         <label for="cooking-time">Tillagningstid:</label>
-        <input type="text" id="cooking-time" v-model="newRecipe.cookingTime" >
+        <input type="text" id="cooking-time" v-model="newRecipe.cookingTime" required oninvalid="this.setCustomValidity('Du måste ange en ungefärlig tid för att tillaga rätten.')" onchange="this.setCustomValidity('')">
       </div>
       <div class="input-field">
         <label for="difficulty">Svårighetsgrad:</label>
-        <input type="text" id="difficulty" v-model="newRecipe.difficultyLevel" >
+        <input type="text" id="difficulty" v-model="newRecipe.difficultyLevel" required oninvalid="this.setCustomValidity('Du måste ange hur svårt ditt recept är.')" onchange="this.setCustomValidity('')">
       </div>
       <!-- Categories -->
       <div>
@@ -93,13 +93,6 @@
       </div>
       <button type="button" class="btn waves-effect waves-light" v-on:click="addInstruction">Lägg till instruktion</button>
 
-      <!-- Fail/Success alert -->
-      <div v-if="addRecipeMessage.success" class="panel green lighten-4 green-text">
-        <p>{{ addRecipeMessage.success }}</p>
-      </div>
-      <div v-if="addRecipeMessage.error" class="panel red lighten-4 red-text">
-        <p>{{ addRecipeMessage.error }}</p>
-      </div>
       <!-- Submit/Cancel buttons -->
       <div class="row">
         <button type="submit" class="waves-effect waves-light btn col s4 offset-s1">Spara<i class="material-icons right">send</i></button>
@@ -146,7 +139,7 @@
       }
     },
     computed: {
-      ...mapState(['ingredientsFilteredByName', 'addRecipeMessage'])
+      ...mapState(['ingredientsFilteredByName'])
     },
     methods: {
       ...mapActions(['addNewRecipe', 'filterIngredientsByName', 'clearOutFilteredIngredients']),
@@ -244,18 +237,4 @@
     cursor: pointer;
   }
 
-  .panel {
-    margin: 5%;
-  }
-
-  .panel.green {
-    border-radius: 3px;
-    box-shadow: 0 0 15px 0 green;
-    border: 1px solid green;
-  }
-  .panel.red {
-    border-radius: 3px;
-    box-shadow: 0 0 15px 0 red;
-    border: 1px solid red;
-  }
 </style>
