@@ -5,13 +5,14 @@
     </div>
     <div class="row">
       <div class="col push-m1" id="recipe-wrapper">
-        <div v-for="recipe in recipes" :key="recipe._id" class="col m3 s12 recipe-box">
-          <h4>{{ recipe.name }}</h4>
+        <div v-for="recipe in recipes" :key="recipe._id" class="col l3 m4 offset-m1 s12 recipe-box">
+          <h5>{{ recipe.name }}</h5>
           <p>{{ recipe.description ? recipe.description : 'Ingen beskrivning' }}</p>
           <button class="waves-effect waves-light btn red" @click="deleteRecipe(recipe._id)">Ta bort</button>
         </div>
       </div>
     </div>
+    
   </div>
 </template>
 
@@ -26,7 +27,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['recipes'])
+    ...mapState(['recipes', 'showDeleteMessage'])
   },
   methods: {
     ...mapActions(['deleteRecipe'])
@@ -55,5 +56,7 @@ button{
   bottom: 0px;
   left: calc(100% / 2.2 - 36px);
 }
+
+
 
 </style>

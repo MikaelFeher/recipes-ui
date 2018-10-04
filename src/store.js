@@ -9,7 +9,9 @@ export default new Vuex.Store({
     recipes: [],
     filteredRecipes: [],
     ingredients: [],
-    ingredientsFilteredByName: []
+    ingredientsFilteredByName: [],
+    addRecipeMessage: {},
+    showDeleteMessage: false
   },
   getters: {
     getRecipeById: state => id => {
@@ -34,6 +36,12 @@ export default new Vuex.Store({
     },
     CLEAR_FILTERED_INGREDIENTS(state) {
       state.ingredientsFilteredByName = []
+    },
+    ADD_RECIPE_MESSAGE(state, message) {
+      state.addRecipeMessage = Object.assign({}, state.addRecipeMessage, message)
+    },
+    DELETE_RECIPE_MESSAGE(state, deleteMessageStatus) {
+      state.showDeleteMessage = deleteMessageStatus
     }
   },
   actions: {
@@ -47,15 +55,19 @@ export default new Vuex.Store({
     },
     filterRecipesByName({ commit, state }, recipeToFind) {
       const filtered = state.recipes.filter(recipe => recipe.name.toLowerCase().includes(recipeToFind.toLowerCase()))
+      if(!filtered.length) return commit('FILTER_RECIPES', [{ error: 'Finns inga recept med det namnet...' }])
       commit('FILTER_RECIPES', filtered)
     },
     filterRecipesByCategory({ commit, state }, category) {
+      commit('FILTER_RECIPES', [])
+      
       if(category === 'alla') {
         commit('FILTER_RECIPES', [])
         return
       }
+      
       const filtered = state.recipes.filter(recipe => recipe.categories && recipe.categories.includes(category.toLowerCase()))
-      if(!filtered.length) return
+      if(!filtered.length) return commit('FILTER_RECIPES', [{ error: 'Finns inga recept i denna kategorin...' }])
       commit('FILTER_RECIPES', filtered)
     },
     filterIngredientsByName({ commit, state }, ingredientToFind) {
@@ -65,17 +77,23 @@ export default new Vuex.Store({
     clearOutFilteredIngredients({ commit }) {
       commit('CLEAR_FILTERED_INGREDIENTS')
     },
-    async addNewRecipe({ dispatch }, newRecipe) {
+    async addNewRecipe({ commit, dispatch }, newRecipe) {
+      commit('ADD_RECIPE_MESSAGE', {})
       await axios.post('http://localhost:3003/recipes/admin/recipe/add-new-recipe', newRecipe)
-        .then(res => res.data)
-        .catch(err => console.log(err))
+      .then(res => {
+        if(res.data.error) return commit('ADD_RECIPE_MESSAGE', { error: 'Det finns redan ett recept med det namnet...' })
+        return commit('ADD_RECIPE_MESSAGE', { success: 'Receptet skapat! :)' })
+      })
+      setTimeout(() => commit('ADD_RECIPE_MESSAGE', { error: '', success: '' }), 4000)
       dispatch('fetchRecipesFromAPI')
     },
-    async deleteRecipe({ dispatch },id) {
+    async deleteRecipe({ commit, dispatch },id) {
       await axios.delete(`http://localhost:3003/recipes/admin/recipe/delete-recipe/${id}`)
-        .then(res => console.log(res.data))
-        .catch(err => console.log(err))
-      dispatch('fetchRecipesFromAPI')
+        .then(() => {
+          dispatch('fetchRecipesFromAPI')
+          commit('DELETE_RECIPE_MESSAGE', true)
+        })
+        setTimeout(() => commit('DELETE_RECIPE_MESSAGE', false), 4000)
     }
   },
 });

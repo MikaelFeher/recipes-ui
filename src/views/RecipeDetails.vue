@@ -50,7 +50,7 @@
           <p><b>Det här behöver du:</b></p>
           <ul>
             <li v-for="(ingredient, index) in recipe.ingredients" :key="index" class="row ingredient-item">
-              <p class="">{{ ingredient.units * ingredientModifier }}{{ ingredient.measuringUnit }} <span> {{ ingredient.name }}</span></p>
+              <p class="">{{ parseFloat((Math.ceil((ingredient.units * ingredientModifier) * 2) / 2).toFixed(2)) }}{{ ingredient.measuringUnit }} <span> {{ ingredient.name }}</span></p>
             </li>
           </ul>
         </div>

@@ -9,6 +9,11 @@
           <label for="search" class="orange-text">Sök recept...</label>
         </div>
       </div>
+      <div class="row">
+        <div v-if="showDeleteMessage" class="panel red lighten-4 red-text col s6 offset-s3" id="delete-recipe-message">
+          <h5>Receptet raderat</h5>
+        </div>
+      </div>
       <div v-if="$route.fullPath === '/'" class="row" >
         <div class="col s12">
           <div class="tabs orange col m6 offset-m3" id="tabs-bar">
@@ -21,12 +26,6 @@
               {{ category }}
             </button>
           </div>
-          <!-- <ul class="tabs orange col m6 offset-m3" id="tabs-bar">
-            <li class="tab col s3 white-text waves-effect waves-light" @click="filterRecipesByCategory('frukost')">Frukost</li>
-            <li class="tab col s3 white-text waves-effect waves-light" @click="filterRecipesByCategory('lunch')">Lunch</li>
-            <li class="tab col s3 white-text waves-effect waves-light" @click="filterRecipesByCategory('middag')">Middag</li>
-            <li class="tab col s3 white-text waves-effect waves-light" @click="filterRecipesByCategory('fest')">Fest</li>
-          </ul> -->
         </div>
       </div>
     </nav>
@@ -58,7 +57,7 @@ export default {
     // M.Tabs.init(el, options);
   },
   computed: {
-    ...mapState(['recipes'])
+    ...mapState(['recipes', 'showDeleteMessage'])
   },
   methods: {
     ...mapActions(['filterRecipesByName', 'filterRecipesByCategory']),
@@ -100,5 +99,14 @@ nav {
   font-size: 1.2rem;
   letter-spacing: .1rem;
   margin: auto 1.5%;
+}
+
+#delete-recipe-message {
+  padding: 0;
+  margin-top: 10%;
+  font-size: 1.5rem;
+  border-radius: 3px;
+  box-shadow: 0 0 15px 0 red;
+  border: 1px solid red;
 }
 </style>
