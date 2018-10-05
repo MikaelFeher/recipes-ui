@@ -55,7 +55,7 @@
             <td>{{ ingredient.units }} {{ ingredient.measuringUnit }}</td>
             <td>
               {{ ingredient.unitEquivalentInGrams }} gram 
-              <span><i class="material-icons red-text right hoverable" @click="removeIngredient(ingredient)" id="delete-ingredient-button">delete_forever</i></span>
+              <span><i class="material-icons red-text right hoverable" @click="removeIngredient(ingredient)" id="delete-button">delete_forever</i></span>
             </td>
           </tbody>
         </table>
@@ -89,6 +89,7 @@
       <h4>Instruktioner</h4>
       <ul id="instructions-list">
         <li v-for="(instruction, index) in newRecipe.instructions" :key="index" id="instructions-list-item" class="left-align">
+          <span><i class="material-icons red-text left-align hoverable" @click="removeInstruction(instruction)" id="delete-button">delete_forever</i></span>
           {{ index + 1 }}. {{ instruction }}
         </li>
       </ul>
@@ -196,6 +197,9 @@
         this.newRecipe.instructions = this.newRecipe.instructions.concat(this.instruction)
         this.instruction = '';
       },
+      removeInstruction(instruction) {
+        this.newRecipe.instructions = this.newRecipe.instructions.filter(item => item !== instruction)
+      },
       addRecipe() {
         this.addNewRecipe(this.newRecipe)
         this.resetValues()
@@ -257,7 +261,7 @@
     cursor: pointer;
   }
 
-  #delete-ingredient-button {
+  #delete-button {
     cursor: pointer;
   }
 </style>
