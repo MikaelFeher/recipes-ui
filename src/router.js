@@ -5,10 +5,11 @@ import RecipeDetails from '@/views/RecipeDetails.vue'
 import Admin from '@/views/admin/Admin.vue'
 import AddRecipe from '@/components/admin/AddRecipe.vue'
 import DeleteRecipe from '@/components/admin/DeleteRecipe.vue'
+import Login from '@/views/Login.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const router =  new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -21,6 +22,11 @@ export default new Router({
       path: '/recipe/:id',
       name: 'recipe',
       component: RecipeDetails
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     },
     {
       path: '/admin',
@@ -43,3 +49,19 @@ export default new Router({
     }
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicPages = ['/', '/login', '/recipe/:id', ];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = $cookies.get('token');
+  console.log('loggenIn: ', loggedIn)
+
+  if (authRequired && !loggedIn) {
+    return next('/login');
+  }
+
+  next();
+})
+
+export default router

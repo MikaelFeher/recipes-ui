@@ -79,7 +79,7 @@ export default new Vuex.Store({
     },
     async addNewRecipe({ commit, dispatch }, newRecipe) {
       commit('ADD_RECIPE_MESSAGE', {})
-      await axios.post('http://localhost:3003/recipes/admin/recipe/add-new-recipe', newRecipe)
+      await axios.post('http://localhost:3003/admin/recipe/add-new-recipe', newRecipe)
       .then(res => {
         if(res.data.error) return commit('ADD_RECIPE_MESSAGE', { error: 'Det finns redan ett recept med det namnet...' })
         return commit('ADD_RECIPE_MESSAGE', { success: 'Receptet skapat! :)' })
@@ -88,12 +88,13 @@ export default new Vuex.Store({
       dispatch('fetchRecipesFromAPI')
     },
     async deleteRecipe({ commit, dispatch },id) {
-      await axios.delete(`http://localhost:3003/recipes/admin/recipe/delete-recipe/${id}`)
+      await axios.delete(`http://localhost:3003/admin/recipe/delete-recipe/${id}`)
         .then(() => {
           dispatch('fetchRecipesFromAPI')
           commit('DELETE_RECIPE_MESSAGE', true)
         })
         setTimeout(() => commit('DELETE_RECIPE_MESSAGE', false), 4000)
-    }
+    },
+    // login()
   },
 });
