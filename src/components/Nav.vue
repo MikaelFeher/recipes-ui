@@ -3,8 +3,21 @@
     <nav class=" orange darken-3">
       <div class="nav-wrapper row">
         <!-- <router-link to="/admin" class="left">Admin Sidor</router-link> -->
-        <router-link to="/" class="brand-logo center white-text col s12">RECEPT &amp; NÄRING</router-link>
-        <div v-if="$route.fullPath === '/'" class="input-field col s3 right" id="search-bar">
+          <ul class="col m4">
+            <li class="waves-effect waves-light">
+              <router-link to="/home">Hem</router-link>
+            </li>
+            <li class="waves-effect waves-light">
+              <router-link to="/admin">Admin</router-link>
+            </li>
+            <li v-if="isLoggedIn" class="waves-effect waves-light">
+              <router-link @click.native="logout" to="" class="" >Logga Ut <i class="material-icons right">exit_to_app</i> </router-link>
+            </li>
+          </ul>
+          <div class="center col m1 s12">
+            <router-link to="/" class="brand-logo white-text ">RECEPT &amp; NÄRING</router-link>
+          </div>
+        <div v-if="$route.fullPath === '/'" class="input-field col m3 s3 right" id="search-bar">
           <input type="text" id="search" class="white" v-model="recipeToFind" @input="findARecipe()" autocomplete="off">
           <label for="search" class="orange-text">Sök recept...</label>
         </div>
@@ -62,18 +75,21 @@ export default {
     }
   },
   mounted: function() {
-    // M.Tabs.init(el, options);
+    console.log('isLoggedIn: ', this.isLoggedIn);
   },
   computed: {
-    ...mapState(['recipes', 'showDeleteMessage', 'addRecipeMessage'])
+    ...mapState(['recipes', 'showDeleteMessage', 'addRecipeMessage', 'isLoggedIn'])
   },
   methods: {
-    ...mapActions(['filterRecipesByName', 'filterRecipesByCategory']),
+    ...mapActions(['filterRecipesByName', 'filterRecipesByCategory', 'logOutUser']),
     findARecipe() {
       this.filterRecipesByName(this.recipeToFind)
     },
     filterByCategory(category) {
       this.filterRecipesByCategory(category)
+    },
+    logout() {
+      this.logOutUser()
     }
   },
 }
@@ -133,4 +149,6 @@ nav {
   box-shadow: 0 0 15px 0 red;
   border: 1px solid red;
 }
+
+
 </style>

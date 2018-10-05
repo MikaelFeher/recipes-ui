@@ -1,6 +1,7 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
 import axios from 'axios'
+import router from '@/router'
 
 Vue.use(Vuex);
 
@@ -11,13 +12,14 @@ export default new Vuex.Store({
     ingredients: [],
     ingredientsFilteredByName: [],
     addRecipeMessage: {},
-    showDeleteMessage: false
+    showDeleteMessage: false,
+    loggedInUser: '',
+    isLoggedIn: false
   },
   getters: {
     getRecipeById: state => id => {
       return state.recipes.find(recipe => recipe._id === id)
     }
-    
   },
   mutations: {
     POPULATE_RECIPES(state, recipes) {
@@ -42,6 +44,10 @@ export default new Vuex.Store({
     },
     DELETE_RECIPE_MESSAGE(state, deleteMessageStatus) {
       state.showDeleteMessage = deleteMessageStatus
+    },
+    SET_USER_LOGGED_IN_STATUS(state, payload) {
+      state.isLoggedIn = payload.loggedInStatus
+      state.loggedInUser = payload.user
     }
   },
   actions: {
@@ -95,6 +101,40 @@ export default new Vuex.Store({
         })
         setTimeout(() => commit('DELETE_RECIPE_MESSAGE', false), 4000)
     },
-    // login()
-  },
+    requestAuthenticationStatus({ commit }) {
+      const user = $cookies.get('user') || {}
+      const loggedInStatus = !!user.token
+      const payload = {
+        user,
+        loggedInStatus 
+      }
+      commit('SET_USER_LOGGED_IN_STATUS', payload)
+    },
+    logInUser({ commit }, loginDetails){
+      const { username, password } = loginDetails
+      axios.post('http://localhost:3003/login', {
+        username,
+        password
+      }).then(result => {
+        const user = result.data.user
+        $cookies.set('user', user, '1d')
+        router.replace('/admin')
+        const loggedInStatus = !!user.token
+        const payload = {
+          user,
+          loggedInStatus 
+        }
+        commit('SET_USER_LOGGED_IN_STATUS', payload)
+      })
+    },
+    logOutUser({ commit }) {
+      $cookies.remove('user')
+      router.replace('/login')
+      const payload = {
+        user: {},
+        loggedInStatus: false
+      }
+      commit('SET_USER_LOGGED_IN_STATUS', payload)
+    }
+  }
 });

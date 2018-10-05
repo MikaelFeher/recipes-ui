@@ -6,6 +6,7 @@ import Admin from '@/views/admin/Admin.vue'
 import AddRecipe from '@/components/admin/AddRecipe.vue'
 import DeleteRecipe from '@/components/admin/DeleteRecipe.vue'
 import Login from '@/views/Login.vue'
+import LoggedOut from '@/views/LoggedOut.vue'
 
 Vue.use(Router)
 
@@ -44,6 +45,11 @@ const router =  new Router({
       component: DeleteRecipe
     },
     {
+      path: '/loggedOut',
+      name: 'loggedOut',
+      component: LoggedOut
+    },
+    {
       path: '*',
       redirect: '/'
     }
@@ -52,10 +58,10 @@ const router =  new Router({
 
 router.beforeEach((to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ['/', '/login', '/recipe/:id', ];
+  const publicPages = ['/', '/login', '/recipe/:id'];
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = $cookies.get('token');
-  console.log('loggenIn: ', loggedIn)
+  const loggedIn = $cookies.get('user');
+  console.log('loggedIn: ', loggedIn)
 
   if (authRequired && !loggedIn) {
     return next('/login');

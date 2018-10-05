@@ -30,9 +30,10 @@ export default {
   created() {
     this.fetchRecipesFromAPI()
     this.fetchIngredientsFromAPI()
+    this.requestAuthenticationStatus()
   },
   methods: {
-    ...mapActions(['fetchRecipesFromAPI', 'fetchIngredientsFromAPI'])
+    ...mapActions(['fetchRecipesFromAPI', 'fetchIngredientsFromAPI', 'requestAuthenticationStatus'])
   }
 }
 </script>
