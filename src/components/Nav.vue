@@ -14,7 +14,7 @@
             </li>
           </ul>
           <div class="center col m1 s12">
-            <router-link to="/" class="brand-logo white-text ">RECEPT &amp; NÄRING</router-link>
+            <router-link to="/" class="brand-logo white-text hoverable">RECEPT &amp; NÄRING</router-link>
           </div>
         <div v-if="$route.fullPath === '/'" class="input-field col m4 s3 right" id="search-bar">
           <input type="text" id="search" class="white" v-model="recipeToFind" @input="findARecipe()" autocomplete="off" />
@@ -40,7 +40,7 @@
             <button 
               v-for="(category, index) in categories" 
               :key="index" 
-              class="tab col s2  white-text waves-effect waves-light btn-flat" 
+              class="tab col s2 hoverable white-text orange waves-effect waves-light " 
               @click="filterByCategory(category)"
             >
               {{ category }}
@@ -117,6 +117,7 @@
     font-size: 1.2rem;
     letter-spacing: .1rem;
     margin: auto 1.5%;
+    border: 1px solid orange;
   }
 
   #delete-recipe-message {

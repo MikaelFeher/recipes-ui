@@ -15,8 +15,8 @@
           </div>
         </div>
         <div class="row" id="button-container">
-          <button type="submit" class="waves-effect waves-light btn teal right col s12 m12 l6" @click="login">Logga In<i class="material-icons right">send</i></button>
-          <router-link to="/" class="waves-effect waves-light btn red right col s12 m12 l6">Avbryt<i class="material-icons right">cancel</i></router-link>
+          <button type="submit" class="waves-effect waves-light btn teal hoverable right col s12 m12 l6" @click="login">Logga In<i class="material-icons right">send</i></button>
+          <router-link to="/" class="waves-effect waves-light btn red hoverable right col s12 m12 l6">Avbryt<i class="material-icons right">cancel</i></router-link>
         </div>
         <p v-if="errorMsg.username" class="panel red lighten-4 red-text col s12">{{ errorMsg.username }}</p>
         <p v-if="errorMsg.password" class="panel red lighten-4 red-text col s12">{{ errorMsg.password }}</p>
