@@ -13,7 +13,7 @@ export default new Vuex.Store({
     ingredientsFilteredByName: [],
     addRecipeMessage: {},
     showDeleteMessage: false,
-    loggedInUser: '',
+    loggedInUser: {},
     isLoggedIn: false,
     logInErrorMsg: ''
   },
@@ -49,6 +49,7 @@ export default new Vuex.Store({
     SET_USER_LOGGED_IN_STATUS(state, payload) {
       state.isLoggedIn = payload.loggedInStatus
       state.loggedInUser = payload.user
+      console.log('state.loggedInUser: ', state.loggedInUser)
     },
     SET_LOG_IN_ERROR_MESSAGE(state, msg) {
       state.logInErrorMsg = msg
@@ -87,9 +88,11 @@ export default new Vuex.Store({
     clearOutFilteredIngredients({ commit }) {
       commit('CLEAR_FILTERED_INGREDIENTS')
     },
-    async addNewRecipe({ commit, dispatch }, newRecipe) {
+    async addNewRecipe({ state, commit, dispatch }, newRecipe) {
       commit('ADD_RECIPE_MESSAGE', {})
-      await axios.post('http://localhost:3003/admin/recipe/add-new-recipe', newRecipe)
+      await axios.post('http://localhost:3003/admin/recipe/add-new-recipe', newRecipe, {headers:{
+        'Authorization': `Bearer ${state.loggedInUser.token}`
+      }})
       .then(res => {
         if(res.data.error) return commit('ADD_RECIPE_MESSAGE', { error: 'Det finns redan ett recept med det namnet...' })
         return commit('ADD_RECIPE_MESSAGE', { success: 'Receptet skapat! :)' })

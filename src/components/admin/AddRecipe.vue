@@ -58,7 +58,7 @@
       <form @submit.prevent="addIngredient">
         <div class="input-field">
           <label for="ingredient-name">Ingrediens</label>
-          <input type="text" id="ingredient-name" v-model="ingredient.name" @input="findIngredient" @blur="showList = false"/>
+          <input type="text" id="ingredient-name" v-model="ingredient.name" @input="findIngredient" />
         <ul v-if="showList" id="ingredients-select-list">
           <li v-for="(ingredient, index) in ingredientsFilteredByName" :key="index" @click="addIngredientDetails(ingredient)" class="left-align">
             {{ ingredient.name }}
@@ -149,15 +149,28 @@
         this.filterIngredientsByName(this.ingredient.name)
       },
       setUnitEquivalentInGrams() {
-        if(this.ingredient.measuringUnit === 'g' || this.ingredient.measuringUnit === 'gram') {
-          this.ingredient.unitEquivalentInGrams = this.ingredient.units
+
+        switch(this.ingredient.measuringUnit) {
+          case 'g':
+          case 'gram':
+            this.ingredient.unitEquivalentInGrams = this.ingredient.units
+            break
+          case 'hg':
+            this.ingredient.unitEquivalentInGrams = this.ingredient.units * 100
+            break
+          case 'kg':
+            this.ingredient.unitEquivalentInGrams = this.ingredient.units * 1000
+            break;
+          default:
+            break;
         }
       },
-      addIngredientDetails(ingredient) {
+      async addIngredientDetails(ingredient) {
+        console.log('ingredient: ', ingredient)
         this.ingredient.name = ingredient.name
-        this.ingredient.nutritionalValues = ingredient.nutritionalValues
+        this.ingredient.nutritionalValues = await ingredient.nutritionalValues
           .reduce((acc, nv) => acc.concat(Object.assign({}, nv)), [])
-        this.clearOutFilteredIngredients()
+        // this.clearOutFilteredIngredients()
         this.showList = false
       },
       addIngredient() {
