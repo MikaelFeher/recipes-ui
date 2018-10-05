@@ -48,28 +48,14 @@
     methods: {
       ...mapActions(['logInUser']),
       async login() {
-        if(!this.inputOk()) return console.log('this.inputOk fails')
+        if(!this.inputOk()) return 
         const loginDetails = {
           username: this.username,
           password: this.password
         }
 
         this.logInUser(loginDetails)
-        
-        // TODO: Move login functionality to Store.js 
-        // TODO: Add 
-        // TODO: Move login functionality to Store.js 
        
-
-
-        // axios.post('http://localhost:3003/login', {
-        //   username: this.username,
-        //   password: this.password
-        // }).then(result => {
-        //   const token = result.data.token
-        //   $cookies.set('token', token, '1d')
-        //   this.$router.replace('/admin')
-        // })
       },
       inputOk() {
         if(!this.username || !this.password) {

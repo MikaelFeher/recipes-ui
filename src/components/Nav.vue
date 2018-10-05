@@ -75,7 +75,6 @@ export default {
     }
   },
   mounted: function() {
-    console.log('isLoggedIn: ', this.isLoggedIn);
   },
   computed: {
     ...mapState(['recipes', 'showDeleteMessage', 'addRecipeMessage', 'isLoggedIn'])

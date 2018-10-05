@@ -166,7 +166,6 @@
         }
       },
       async addIngredientDetails(ingredient) {
-        console.log('ingredient: ', ingredient)
         this.ingredient.name = ingredient.name
         this.ingredient.nutritionalValues = await ingredient.nutritionalValues
           .reduce((acc, nv) => acc.concat(Object.assign({}, nv)), [])

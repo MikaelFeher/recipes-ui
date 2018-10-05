@@ -90,7 +90,6 @@ export default {
   },
   mounted: function() {
     this.getRecipe()
-    console.log('mounted called');
     this.updateNumbers()
   },
   methods: {

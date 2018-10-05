@@ -49,7 +49,6 @@ export default new Vuex.Store({
     SET_USER_LOGGED_IN_STATUS(state, payload) {
       state.isLoggedIn = payload.loggedInStatus
       state.loggedInUser = payload.user
-      console.log('state.loggedInUser: ', state.loggedInUser)
     },
     SET_LOG_IN_ERROR_MESSAGE(state, msg) {
       state.logInErrorMsg = msg

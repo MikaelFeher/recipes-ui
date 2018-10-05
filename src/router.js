@@ -62,11 +62,8 @@ const router =  new Router({
 
 router.beforeEach((to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  // const publicPages = ['/', '/login', '/recipe/:id'];
-  // const authRequired = !publicPages.includes(to.path);
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const loggedIn = $cookies.get('user');
-  console.log('loggedIn: ', loggedIn)
 
   if (requiresAuth && !loggedIn) {
     return next('/login');
