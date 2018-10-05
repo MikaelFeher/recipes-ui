@@ -20,6 +20,7 @@
         </div>
         <p v-if="errorMsg.username" class="panel red lighten-4 red-text col s12">{{ errorMsg.username }}</p>
         <p v-if="errorMsg.password" class="panel red lighten-4 red-text col s12">{{ errorMsg.password }}</p>
+        <p v-if="logInErrorMsg" class="panel red lighten-4 red-text col s12">{{ logInErrorMsg }}</p>
       </form>
     </div>
   </div>
@@ -27,7 +28,7 @@
 
 <script>
   import axios from 'axios'
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
   
   export default {
     name: 'Login',
@@ -40,6 +41,9 @@
           password: ''
         }
       }
+    },
+    computed: {
+      ...mapState(['logInErrorMsg'])
     },
     methods: {
       ...mapActions(['logInUser']),

@@ -32,22 +32,26 @@ const router =  new Router({
     {
       path: '/admin',
       name: 'admin',
-      component: Admin
+      component: Admin,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/admin/add-new-recipe',
       name: 'add-new-recipe',
-      component: AddRecipe
+      component: AddRecipe,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/admin/delete-recipe',
       name: 'delete-recipe',
-      component: DeleteRecipe
-    },
-    {
-      path: '/loggedOut',
-      name: 'loggedOut',
-      component: LoggedOut
+      component: DeleteRecipe,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '*',
@@ -58,12 +62,13 @@ const router =  new Router({
 
 router.beforeEach((to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ['/', '/login', '/recipe/:id'];
-  const authRequired = !publicPages.includes(to.path);
+  // const publicPages = ['/', '/login', '/recipe/:id'];
+  // const authRequired = !publicPages.includes(to.path);
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const loggedIn = $cookies.get('user');
   console.log('loggedIn: ', loggedIn)
 
-  if (authRequired && !loggedIn) {
+  if (requiresAuth && !loggedIn) {
     return next('/login');
   }
 

@@ -12,7 +12,7 @@
         <span class="card-title activator grey-text text-darken-4">{{ recipe.name }}</span>
         <p>{{ recipe.description }}</p>
         <div>
-          <router-link :to="'/recipe/' + recipe._id" id="recipe-link">Gå till receptet</router-link>
+          <router-link :to="{ name: 'recipe', params: { id: recipe._id  }}" id="recipe-link">Gå till receptet</router-link>
         </div>
       </div>
       <div class="card-reveal">

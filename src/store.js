@@ -14,7 +14,8 @@ export default new Vuex.Store({
     addRecipeMessage: {},
     showDeleteMessage: false,
     loggedInUser: '',
-    isLoggedIn: false
+    isLoggedIn: false,
+    logInErrorMsg: ''
   },
   getters: {
     getRecipeById: state => id => {
@@ -48,6 +49,9 @@ export default new Vuex.Store({
     SET_USER_LOGGED_IN_STATUS(state, payload) {
       state.isLoggedIn = payload.loggedInStatus
       state.loggedInUser = payload.user
+    },
+    SET_LOG_IN_ERROR_MESSAGE(state, msg) {
+      state.logInErrorMsg = msg
     }
   },
   actions: {
@@ -115,7 +119,8 @@ export default new Vuex.Store({
       axios.post('http://localhost:3003/login', {
         username,
         password
-      }).then(result => {
+      }).then((result) => {
+        
         const user = result.data.user
         $cookies.set('user', user, '1d')
         router.replace('/admin')
@@ -125,6 +130,10 @@ export default new Vuex.Store({
           loggedInStatus 
         }
         commit('SET_USER_LOGGED_IN_STATUS', payload)
+      })
+      .catch(err => {
+        commit('SET_LOG_IN_ERROR_MESSAGE', 'Ogiltigt lösenord')
+        setTimeout(() => commit('SET_LOG_IN_ERROR_MESSAGE', ''), 4000)
       })
     },
     logOutUser({ commit }) {
