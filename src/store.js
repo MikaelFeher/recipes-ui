@@ -100,8 +100,10 @@ export default new Vuex.Store({
       setTimeout(() => commit('ADD_RECIPE_MESSAGE', { error: '', success: '' }), 4000)
       dispatch('fetchRecipesFromAPI')
     },
-    async deleteRecipe({ commit, dispatch },id) {
-      await axios.delete(`http://localhost:3003/admin/recipe/delete-recipe/${id}`)
+    async deleteRecipe({ state, commit, dispatch },id) {
+      await axios.delete(`http://localhost:3003/admin/recipe/delete-recipe/${id}`, {headers:{
+        'Authorization': `Bearer ${state.loggedInUser.token}`
+      }})
         .then(() => {
           dispatch('fetchRecipesFromAPI')
           commit('DELETE_RECIPE_MESSAGE', true)
