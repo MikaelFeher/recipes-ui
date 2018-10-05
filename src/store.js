@@ -61,10 +61,14 @@ export default new Vuex.Store({
       const ingredients = await axios.get('http://localhost:3003/ingredients/')
       commit('POPULATE_INGREDIENTS', ingredients)
     },
-    filterRecipesByName({ commit, state }, recipeToFind) {
-      const filtered = state.recipes.filter(recipe => recipe.name.toLowerCase().includes(recipeToFind.toLowerCase()))
-      if(!filtered.length) return commit('FILTER_RECIPES', [{ error: 'Finns inga recept med det namnet...' }])
-      commit('FILTER_RECIPES', filtered)
+    filterRecipesByName({ commit, state }, wordsToSearchFor) {
+      const filteredByName = state.recipes.filter(recipe => recipe.name.toLowerCase().includes(wordsToSearchFor.toLowerCase()))
+      const filteredByDescription = state.recipes.filter(recipe => 
+        recipe.description && recipe.description.toLowerCase().includes(wordsToSearchFor.toLowerCase()))
+        .filter(recipe => !filteredByName.includes(recipe))
+      const filteredResult = filteredByName.concat(filteredByDescription)
+      if(!filteredResult.length) return commit('FILTER_RECIPES', [{ error: 'Tyvärr har vi inte det du söker :(' }])
+      commit('FILTER_RECIPES', filteredResult)
     },
     filterRecipesByCategory({ commit, state }, category) {
       commit('FILTER_RECIPES', [])

@@ -45,9 +45,4 @@
     padding: 0;
     margin: 0;
   }
-
-  #search-bar {
-    top: calc(100%/2 - 30px);
-    height: 20px;
-  }
 </style>

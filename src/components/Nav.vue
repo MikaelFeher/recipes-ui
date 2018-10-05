@@ -16,9 +16,9 @@
           <div class="center col m1 s12">
             <router-link to="/" class="brand-logo white-text ">RECEPT &amp; NÄRING</router-link>
           </div>
-        <div v-if="$route.fullPath === '/'" class="input-field col m3 s3 right" id="search-bar">
-          <input type="text" id="search" class="white" v-model="recipeToFind" @input="findARecipe()" autocomplete="off">
-          <label for="search" class="orange-text">Sök recept...</label>
+        <div v-if="$route.fullPath === '/'" class="input-field col m4 s3 right" id="search-bar">
+          <input type="text" id="search" class="white" v-model="recipeToFind" @input="findARecipe()" autocomplete="off" />
+          <label for="search" class="orange-text">Sök recept via namn och/eller beskrivning</label>
         </div>
       </div>
       <div class="row">
@@ -145,4 +145,10 @@
     box-shadow: 0 0 15px 0 red;
     border: 1px solid red;
   }
+
+  #search-bar label{
+    text-align: center;
+    align-items: center;
+  }
+
 </style>
