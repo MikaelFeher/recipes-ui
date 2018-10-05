@@ -49,9 +49,14 @@
             <th>Motsvarar i gram</th>
           </thead>
           <tbody v-for="(ingredient, index) in newRecipe.ingredients" :key="index">
-            <td>{{ ingredient.name }}</td>
+            <td>
+              {{ ingredient.name }}
+            </td>
             <td>{{ ingredient.units }} {{ ingredient.measuringUnit }}</td>
-            <td>{{ ingredient.unitEquivalentInGrams }} gram</td>
+            <td>
+              {{ ingredient.unitEquivalentInGrams }} gram 
+              <span><i class="material-icons red-text right hoverable" @click="removeIngredient(ingredient)" id="delete-ingredient-button">delete_forever</i></span>
+            </td>
           </tbody>
         </table>
       </div>
@@ -183,6 +188,9 @@
         }
         this.tempIngredientName = ''
       },
+      removeIngredient(ingredient) {
+        this.newRecipe.ingredients = this.newRecipe.ingredients.filter(item => item !== ingredient)
+      },
       addInstruction() {
         if(this.instruction.length < 2) return;
         this.newRecipe.instructions = this.newRecipe.instructions.concat(this.instruction)
@@ -246,6 +254,10 @@
   }
 
   #ingredients-select-list li {
+    cursor: pointer;
+  }
+
+  #delete-ingredient-button {
     cursor: pointer;
   }
 </style>

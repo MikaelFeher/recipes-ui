@@ -48,7 +48,7 @@
           <p><b>Det här behöver du:</b></p>
           <ul>
             <li v-for="(ingredient, index) in recipe.ingredients" :key="index" class="row ingredient-item">
-              <p class="">{{ parseFloat((Math.ceil((ingredient.units * ingredientModifier) * 2) / 2).toFixed(2)) }}{{ ingredient.measuringUnit }} <span> {{ ingredient.name }}</span></p>
+              <p class="">{{ (parseFloat((Math.ceil((ingredient.units * ingredientModifier) * 2) / 2).toFixed(2))).toString().replace('.', ',') }} {{ ingredient.measuringUnit }} <span> {{ ingredient.name }}</span></p>
             </li>
           </ul>
         </div>
@@ -126,8 +126,8 @@
 
           // Need to know how many 100grams of the ingredient is in the recipe...
           const amountToCalculate = amountInGrams/100
-          return ingredient.nutritionalValues
-            .reduce((acc,value) => Object.assign(
+          return ingredient.nutritionalValues.reduce((acc,value) => 
+            Object.assign(
               {}, 
               acc, 
               { [value.name]: value.value * amountToCalculate }
