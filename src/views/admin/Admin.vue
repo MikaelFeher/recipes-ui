@@ -7,22 +7,18 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+  import { mapState } from 'vuex'
 
-export default {
-  data() {
-    return {
-
+  export default {
+    name: 'Admin',
+    computed: {
+      ...mapState(['loggedInUser'])
     }
-  },
-  computed: {
-    ...mapState(['loggedInUser'])
   }
-}
 </script>
 
 <style scoped>
-a {
-  margin: 1%;
-}
+  a {
+    margin: 1%;
+  }
 </style>

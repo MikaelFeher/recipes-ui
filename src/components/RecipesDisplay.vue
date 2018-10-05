@@ -27,36 +27,37 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+  import { mapState } from 'vuex'
 
-// TODO: Add the nutritional values to the recipe display
-
-export default {
-  name: 'RecipesDisplay',
-  computed: {
-    ...mapState([
-      'recipes',
-      'filteredRecipes'
-    ])
+  export default {
+    name: 'RecipesDisplay',
+    computed: {
+      ...mapState([
+        'recipes',
+        'filteredRecipes'
+      ])
+    }
   }
-}
 </script>
 
 <style scoped>
-.container {
-  width: 85vw;
-  transition: all 1.5s ease-in-out;
-}
-.card {
-  min-height: 350px;
-}
-img {
-  height: 170px;
-  size: 100%;
-}
-#recipe-link {
-  position: absolute;
-  left: calc(100% / 3.4);
-  bottom: 20px;
-}
+  .container {
+    width: 85vw;
+    transition: all 1.5s ease-in-out;
+  }
+
+  .card {
+    min-height: 350px;
+  }
+
+  img {
+    height: 170px;
+    size: 100%;
+  }
+
+  #recipe-link {
+    position: absolute;
+    left: calc(100% / 3.4);
+    bottom: 20px;
+  }
 </style>

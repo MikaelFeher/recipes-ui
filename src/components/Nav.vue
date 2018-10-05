@@ -2,7 +2,6 @@
   <div class="navbar-fixed">
     <nav class=" orange darken-3">
       <div class="nav-wrapper row">
-        <!-- <router-link to="/admin" class="left">Admin Sidor</router-link> -->
           <ul class="col m4">
             <li class="waves-effect waves-light">
               <router-link to="/home">Hem</router-link>
@@ -50,104 +49,100 @@
         </div>
       </div>
     </nav>
-      <!-- <Hero  /> -->
   </div>
 </template>
 
 <script>
-import Hero from '@/components/Hero'
-import { mapActions, matState, mapState } from 'vuex'
+  import { mapActions, matState, mapState } from 'vuex'
 
-export default {
-  components: {
-    Hero
-  },
-   data() {
-    return {
-      recipeToFind: '',
-      categories: [
-        'Frukost',
-        'Lunch',
-        'Middag',
-        'Fest',
-        'alla'
-      ]
-    }
-  },
-  mounted: function() {
-  },
-  computed: {
-    ...mapState(['recipes', 'showDeleteMessage', 'addRecipeMessage', 'isLoggedIn'])
-  },
-  methods: {
-    ...mapActions(['filterRecipesByName', 'filterRecipesByCategory', 'logOutUser']),
-    findARecipe() {
-      this.filterRecipesByName(this.recipeToFind)
+  export default {
+    name: 'Nav',
+    data() {
+      return {
+        recipeToFind: '',
+        categories: [
+          'Frukost',
+          'Lunch',
+          'Middag',
+          'Fest',
+          'alla'
+        ]
+      }
     },
-    filterByCategory(category) {
-      this.filterRecipesByCategory(category)
+    mounted: function() {
     },
-    logout() {
-      this.logOutUser()
-    }
-  },
-}
+    computed: {
+      ...mapState(['recipes', 'showDeleteMessage', 'addRecipeMessage', 'isLoggedIn'])
+    },
+    methods: {
+      ...mapActions(['filterRecipesByName', 'filterRecipesByCategory', 'logOutUser']),
+      findARecipe() {
+        this.filterRecipesByName(this.recipeToFind)
+      },
+      filterByCategory(category) {
+        this.filterRecipesByCategory(category)
+      },
+      logout() {
+        this.logOutUser()
+      }
+    },
+  }
 </script>
 
 <style scoped>
-nav {
-  top: 0;
-  z-index: 100;
-}
+  nav {
+    top: 0;
+    z-index: 100;
+  }
 
-.brand-logo {
-  text-shadow: 2px 2px#2c3e50;
-}
+  .brand-logo {
+    text-shadow: 2px 2px#2c3e50;
+  }
 
+  .row {
+    margin-bottom: 0 !important;
+  }
 
-.row {
-  margin-bottom: 0 !important;
-}
+  .nav-wrapper {
+    margin-bottom: 2%;
+  }
 
-.nav-wrapper {
-  margin-bottom: 2%;
-}
+  #tabs-bar {
+    margin-bottom: 4%;
+  }
 
-#tabs-bar {
-  margin-bottom: 4%;
-}
-#tabs-bar button {
-  cursor: pointer;
-  text-shadow: 1px 1px black;
-  font-size: 1.2rem;
-  letter-spacing: .1rem;
-  margin: auto 1.5%;
-}
+  #tabs-bar button {
+    cursor: pointer;
+    text-shadow: 1px 1px black;
+    font-size: 1.2rem;
+    letter-spacing: .1rem;
+    margin: auto 1.5%;
+  }
 
-#delete-recipe-message {
-  padding: 0;
-  margin-top: 20%;
-  font-size: 1.5rem;
-  border-radius: 3px;
-  box-shadow: 0 0 15px 0 red;
-  border: 1px solid red;
-}
-.panel {
-  padding: 0;
-  margin-top: 20%;
-  font-size: 1.5rem;
-}
+  #delete-recipe-message {
+    padding: 0;
+    margin-top: 20%;
+    font-size: 1.5rem;
+    border-radius: 3px;
+    box-shadow: 0 0 15px 0 red;
+    border: 1px solid red;
+  }
 
-.panel.green {
-  border-radius: 3px;
-  box-shadow: 0 0 15px 0 green;
-  border: 1px solid green;
-}
-.panel.red {
-  border-radius: 3px;
-  box-shadow: 0 0 15px 0 red;
-  border: 1px solid red;
-}
+  .panel {
+    padding: 0;
+    margin-top: 20%;
+    font-size: 1.5rem;
+  }
 
+  .panel.green {
+    border-radius: 3px;
+    box-shadow: 0 0 15px 0 green;
+    border: 1px solid green;
+  }
 
+  .panel.red {
+    border-radius: 3px;
+    box-shadow: 0 0 15px 0 red;
+    border: 1px solid red;
+  }
 </style>

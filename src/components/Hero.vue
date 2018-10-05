@@ -10,23 +10,22 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+  import { mapActions } from 'vuex'
 
-export default {
-  name: 'Hero',
-  data() {
-    return {
-      recipeToFind: ''
+  export default {
+    name: 'Hero',
+    data() {
+      return {
+        recipeToFind: ''
+      }
+    },
+    methods: {
+      ...mapActions(['filterRecipesByName']),
+      findARecipe() {
+        this.filterRecipesByName(this.recipeToFind)
+      }
     }
-  },
-  methods: {
-    ...mapActions(['filterRecipesByName']),
-    findARecipe() {
-      this.filterRecipesByName(this.recipeToFind)
-    }
-  },
-
-}
+  }
 </script>
 
 <style>

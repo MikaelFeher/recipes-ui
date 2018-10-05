@@ -12,51 +12,46 @@
         </div>
       </div>
     </div>
-    
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
 
-export default {
-  name: 'DeleteRecipe',
-  data() {
-    return {
-      recipesToDelete: []
+  export default {
+    name: 'DeleteRecipe',
+    data() {
+      return {
+        recipesToDelete: []
+      }
+    },
+    computed: {
+      ...mapState(['recipes', 'showDeleteMessage'])
+    },
+    methods: {
+      ...mapActions(['deleteRecipe'])
     }
-  },
-  computed: {
-    ...mapState(['recipes', 'showDeleteMessage'])
-  },
-  methods: {
-    ...mapActions(['deleteRecipe'])
   }
-
-}
 </script>
 
 <style scoped>
-#recipe-wrapper {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
+  #recipe-wrapper {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
 
-.recipe-box {
-  position: relative;
-  height: 250px;
-  margin: .5% 1%;
-  border: 1px solid #333;
-  box-shadow: 0 0 15px 0 #333;
-}
+  .recipe-box {
+    position: relative;
+    height: 250px;
+    margin: .5% 1%;
+    border: 1px solid #333;
+    box-shadow: 0 0 15px 0 #333;
+  }
 
-button{
-  position: absolute;
-  bottom: 0px;
-  left: calc(100% / 2.2 - 36px);
-}
-
-
-
+  button{
+    position: absolute;
+    bottom: 0px;
+    left: calc(100% / 2.2 - 36px);
+  }
 </style>

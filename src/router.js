@@ -6,7 +6,6 @@ import Admin from '@/views/admin/Admin.vue'
 import AddRecipe from '@/components/admin/AddRecipe.vue'
 import DeleteRecipe from '@/components/admin/DeleteRecipe.vue'
 import Login from '@/views/Login.vue'
-import LoggedOut from '@/views/LoggedOut.vue'
 
 Vue.use(Router)
 
@@ -68,7 +67,6 @@ router.beforeEach((to, from, next) => {
   if (requiresAuth && !loggedIn) {
     return next('/login');
   }
-
   next();
 })
 

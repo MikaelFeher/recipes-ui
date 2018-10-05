@@ -53,14 +53,13 @@
           username: this.username,
           password: this.password
         }
-
         this.logInUser(loginDetails)
-       
       },
       inputOk() {
         if(!this.username || !this.password) {
           if(!this.username) this.errorMsg.username = 'Användarnamn måste fyllas i...'
           setTimeout(() => this.errorMsg.username = '', 3000)
+
           if(!this.password) this.errorMsg.password = 'Lösenordsfältet kan inte vara tomt...'
           setTimeout(() => this.errorMsg.password = '', 3000)
 
@@ -83,12 +82,14 @@
     margin: 0;
     box-sizing: border-box;
   }
+
   form {
     min-height: 250px;
     margin: 10% 0;
     border: 1px solid #333;
     box-shadow: 0 0 15px 0 #333;
   }
+
   form div {
     padding: 0 3%;
   }
@@ -101,6 +102,5 @@
     padding: 1%;
     border: 1px solid red;
     box-shadow: 0 0 15px 0 red;
-    /* margin-bottom: 3%; */
   }
 </style>

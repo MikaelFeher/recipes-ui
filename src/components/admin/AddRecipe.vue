@@ -248,5 +248,4 @@
   #ingredients-select-list li {
     cursor: pointer;
   }
-
 </style>

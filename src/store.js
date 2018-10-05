@@ -25,11 +25,9 @@ export default new Vuex.Store({
   mutations: {
     POPULATE_RECIPES(state, recipes) {
       state.recipes = recipes.data
-      console.log(!state.recipes.length ? 'No recipes...' : 'Recipes loaded ok!')
     },
     POPULATE_INGREDIENTS(state, ingredients) {
       state.ingredients = ingredients.data
-      console.log(!state.ingredients.length ? 'No ingredients...' : 'Ingredients loaded ok!')
     },
     FILTER_RECIPES(state, filteredResult) {
       state.filteredRecipes = filteredResult
@@ -124,7 +122,6 @@ export default new Vuex.Store({
         username,
         password
       }).then((result) => {
-        
         const user = result.data.user
         $cookies.set('user', user, '1d')
         router.replace('/admin')
